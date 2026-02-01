@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Conception et optimisation d’une solution BI pour le pilotage logistique</title>
+  <meta name="description" content="Mise en place et industrialisation d’une chaîne BI pour le pilotage logistique : Talend ➜ Datamart ➜ Power BI. Contenu public et anonymisé."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="stylesheet" href="../style.css"/>
+
+  <!-- Styles du mockup BI (scopés pour éviter les conflits) -->
+  <style>
+    /* --- mockup BI scope --- */
+    #mockup-bi{margin-top:24px;border:1px solid #e5e7eb;border-radius:14px;background:#f7f8fb}
+    #mockup-bi .wrap{max-width:1100px;margin:auto;padding:22px}
+    #mockup-bi .header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px}
+    #mockup-bi .header h3{font-size:18px;margin:0}
+    #mockup-bi .subtitle{color:#6b7280;font-size:13px}
+    #mockup-bi .pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:6px 10px;font-size:12px;background:#ecfdf5;border:1px solid #d1fae5;color:#065f46}
+
+    #mockup-bi .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:10px 0 16px}
+    #mockup-bi .kpi{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:14px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    #mockup-bi .kpi .label{color:#6b7280;font-size:12px}
+    #mockup-bi .kpi .val{font-size:20px;margin-top:4px}
+    #mockup-bi .kpi .delta{display:inline-block;margin-top:6px;font-size:12px;padding:2px 8px;border-radius:999px}
+    #mockup-bi .delta.up{color:#065f46;background:#ecfdf5;border:1px solid #d1fae5}
+    #mockup-bi .delta.down{color:#991b1b;background:#fef2f2;border:1px solid #fecaca}
+
+    #mockup-bi .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+    #mockup-bi .tab{padding:10px 14px;border-radius:10px;background:#e8eefc;color:#143e9e;border:1px solid #d9e3ff;cursor:pointer;user-select:none}
+    #mockup-bi .tab[aria-selected="true"]{background:#2563eb;color:#fff;border-color:#2563eb}
+    #mockup-bi .panel{display:none}
+    #mockup-bi .panel.active{display:block}
+
+    #mockup-bi .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+    #mockup-bi .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    #mockup-bi .card h4{font-size:15px;margin:0;padding:12px 14px;border-bottom:1px solid #e5e7eb}
+    #mockup-bi .card .body{padding:14px}
+    #mockup-bi table{width:100%;border-collapse:collapse}
+    #mockup-bi th,#mockup-bi td{padding:10px 8px;border-bottom:1px solid #e5e7eb;text-align:left}
+    #mockup-bi th{font-size:12px;color:#6b7280;font-weight:600;background:#fafafa}
+    #mockup-bi .hint{color:#6b7280;font-size:12px;margin-top:6px}
+    @media (max-width: 980px){ #mockup-bi .grid{grid-template-columns:1fr} #mockup-bi .kpis{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 560px){ #mockup-bi .kpis{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <h1 class="hero-title">Conception et optimisation d’une solution BI pour le pilotage logistique</h1>
+    <p class="hero-sub">Talend ➜ Datamart ➜ Power BI • Reporting mensuel fiabilisé • KPI actionnables</p>
+    <div class="badges">
+      <span class="badge">Talend ETL</span>
+      <span class="badge">Oracle SQL Developer</span>
+      <span class="badge">Power BI</span>
+      <span class="badge">Power Query</span>
+      <span class="badge">Data Quality</span>
+    </div>
+  </div>
+</header>
+
+<main class="container page">
+  <div class="banner">Confidentialité : résumé public ; aucune donnée interne. Visuels génériques / anonymisés.</div>
+
+  <section>
+    <h2>Contexte & objectifs</h2>
+    <p>
+      Mise en place et industrialisation d’une chaîne BI pour le pilotage logistique
+      (stocks, approvisionnements, fournisseurs) : Talend ➜ Datamart ➜ Power BI.
+      Objectifs : fiabiliser le reporting mensuel, accélérer les refreshs, et fournir des KPI actionnables
+      (stock dormant, couverture, taux de service fournisseur/client).
+    </p>
+  </section>
+
+  <section>
+    <h2>Architecture</h2>
+    <p>Chaîne ETL ➜ staging/qualité ➜ datamart (étoile) ➜ modèle sémantique ➜ rapports Power BI ➜ utilisateurs.</p>
+  </section>
+
+  <section>
+    <h2>Réalisations</h2>
+
+    <h3>1) Ingestion & staging</h3>
+    <ul>
+      <li>Pipelines d’ingestion mensuelle (CSV + BDD) avec contrôles de schéma et dépôt raw horodaté.</li>
+      <li>Normalisation (types, formats, valeurs), jointures référentiels (article, site, fournisseur, calendrier), traçabilité (logs, source, horodatage).</li>
+      <li>Outils : Talend Open Studio, Excel/Power Query (validation), Oracle SQL Developer (profiling).</li>
+    </ul>
+<figure><img src="../images/talend.png" alt="Talend — flux ETL"><figcaption>Talend — flux ETL</figcaption></figure>
+    <h3>2) Intégration décisionnelle (datamart en étoile)</h3>
+    <ul>
+      <li>Faits (Stocks, Mouvements, Commandes) et dimensions (Article, Site, Fournisseur, Temps) avec UPSERT / historisation simple.</li>
+      <li>Grain d’analyse, clés substitutives, conventions de nommage pour stabilité et performance.</li>
+    </ul>
+
+    <h3>3) Modèle sémantique & rapports (Power BI)</h3>
+    <ul>
+      <li>Modèle relationnel propre (relations 1–*), KPI centralisés au niveau du modèle.</li>
+      <li>Transformations de dernier kilomètre dans Power Query (typage, renommages, colonnes dérivées simples).</li>
+      <li>Rapports : Stocks (valeur, évolution, couverture), Commandes & Fournisseurs (volumes/délais, qualité), RH logistique (agrégats non nominatifs).</li>
+    </ul>
+
+    <h3>4) Performance, robustesse & gouvernance</h3>
+    <ul>
+      <li>Optimisation : exécution parallèle, tri amont, buffers, tuning JVM, index SQL exploités.</li>
+      <li>Orchestration & résilience : séquencement, gestion d’erreurs, notifications, reprise sur incident.</li>
+      <li>Cadence : rafraîchissement mensuel post-clôture, suivi par runbook (contrôles clés, validations).</li>
+      <li>Sécurité & diffusion : contrôle des accès, espaces de travail dédiés, note de lecture.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>KPI suivis (définitions opérationnelles)</h2>
+    <ul>
+      <li>Stock dormant : article sans mouvement sur période longue (ex. ≥ 2 ans).</li>
+      <li>Couverture de stock : stock / consommation moyenne récente (ex. 6 derniers mois).</li>
+      <li>Taux de service fournisseur : livraisons dans les délais / livraisons totales.</li>
+      <li>Taux de service client : niveau de service aux entités internes (dette, transport, exploitation).</li>
+    </ul>
+  </section>
+
+  <!-- MOCKUP BI ANONYMISÉ -->
+  <section id="mockup-bi" aria-label="Démonstration (mockup BI anonymisé)">
+    <div class="wrap">
+      <div class="header">
+        <div>
+          <h3>Tableau de bord BI — Logistique (mockup anonymisé)</h3>
+          <div class="subtitle">Structure type Power BI — données fictives et noms génériques</div>
+        </div>
+        <span class="pill">Dernier refresh : 01/09/2025 06:15</span>
+      </div>
+
+      <!-- KPI cards -->
+      <div class="kpis">
+        <div class="kpi">
+          <div class="label">Valeur de stock</div>
+          <div class="val">€ 12,4 M</div>
+          <span class="delta up">+3,2% vs M-1</span>
+        </div>
+        <div class="kpi">
+          <div class="label">Stock dormant</div>
+          <div class="val">3,8 %</div>
+          <span class="delta down">-0,4 pt</span>
+        </div>
+        <div class="kpi">
+          <div class="label">Couverture moyenne</div>
+          <div class="val">7,2 sem.</div>
+          <span class="delta up">+0,3</span>
+        </div>
+        <div class="kpi">
+          <div class="label">Taux service fournisseur</div>
+          <div class="val">95,6 %</div>
+          <span class="delta up">+1,1 pt</span>
+        </div>
+      </div>
+
+      <!-- Onglets -->
+      <nav class="tabs" role="tablist" aria-label="Onglets">
+        <button class="tab" role="tab" aria-selected="true"  data-tab="stocks">Stocks</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="commandes">Commandes</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="fournisseurs">Fournisseurs</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="rh">RH</button>
+      </nav>
+
+      <!-- PANEL STOCKS -->
+      <section id="panel-stocks" class="panel active" role="tabpanel">
+        <div class="grid">
+          <div class="card">
+            <h4>Évolution de la valeur de stock (12 mois)</h4>
+            <div class="body">
+              <!-- Mini line chart inline SVG (fictif) -->
+              <svg viewBox="0 0 600 200" width="100%" height="160" aria-label="Évolution valeur de stock">
+                <rect x="0" y="0" width="600" height="200" fill="#fafafa" stroke="#e5e7eb"/>
+                <!-- axes -->
+                <line x1="40" y1="20" x2="40" y2="170" stroke="#e5e7eb"/>
+                <line x1="40" y1="170" x2="580" y2="170" stroke="#e5e7eb"/>
+                <!-- polyline (valeurs fictives, lissées) -->
+                <polyline fill="none" stroke="#2563eb" stroke-width="2"
+                  points="40,150 90,140 140,145 190,120 240,110 290,130 340,115 390,105 440,108 490,98 540,92 580,88"/>
+                <!-- points -->
+                <g fill="#2563eb">
+                  <circle cx="40" cy="150" r="3"/><circle cx="90" cy="140" r="3"/><circle cx="140" cy="145" r="3"/>
+                  <circle cx="190" cy="120" r="3"/><circle cx="240" cy="110" r="3"/><circle cx="290" cy="130" r="3"/>
+                  <circle cx="340" cy="115" r="3"/><circle cx="390" cy="105" r="3"/><circle cx="440" cy="108" r="3"/>
+                  <circle cx="490" cy="98" r="3"/><circle cx="540" cy="92" r="3"/><circle cx="580" cy="88" r="3"/>
+                </g>
+              </svg>
+              <p class="hint">Tendance mensuelle (valeurs fictives) — utile pour voir la saisonnalité et les pics.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Répartition par département (Top 5)</h4>
+            <div class="body">
+              <!-- Bar chart simple en CSS -->
+              <table>
+                <thead><tr><th>Département</th><th>Valeur</th></tr></thead>
+                <tbody>
+                  <tr><td>DEP_A</td><td>
+                    <div style="background:#e8eefc;border:1px solid #d9e3ff;border-radius:6px;height:12px;position:relative;">
+                      <span style="position:absolute;left:0;top:-2px;height:12px;width:75%;background:#2563eb;border-radius:6px;"></span>
+                    </div>
+                  </td></tr>
+                  <tr><td>DEP_B</td><td>
+                    <div style="background:#e8eefc;border:1px solid #d9e3ff;border-radius:6px;height:12px;position:relative;">
+                      <span style="position:absolute;left:0;top:-2px;height:12px;width:62%;background:#2563eb;border-radius:6px;"></span>
+                    </div>
+                  </td></tr>
+                  <tr><td>DEP_C</td><td>
+                    <div style="background:#e8eefc;border:1px solid #d9e3ff;border-radius:6px;height:12px;position:relative;">
+                      <span style="position:absolute;left:0;top:-2px;height:12px;width:48%;background:#2563eb;border-radius:6px;"></span>
+                    </div>
+                  </td></tr>
+                  <tr><td>DEP_D</td><td>
+                    <div style="background:#e8eefc;border:1px solid #d9e3ff;border-radius:6px;height:12px;position:relative;">
+                      <span style="position:absolute;left:0;top:-2px;height:12px;width:35%;background:#2563eb;border-radius:6px;"></span>
+                    </div>
+                  </td></tr>
+                  <tr><td>DEP_E</td><td>
+                    <div style="background:#e8eefc;border:1px solid #d9e3ff;border-radius:6px;height:12px;position:relative;">
+                      <span style="position:absolute;left:0;top:-2px;height:12px;width:28%;background:#2563eb;border-radius:6px;"></span>
+                    </div>
+                  </td></tr>
+                </tbody>
+              </table>
+              <p class="hint">Noms et valeurs génériques ; aucun identifiant interne exposé.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL COMMANDES -->
+      <section id="panel-commandes" class="panel" role="tabpanel">
+        <div class="grid">
+          <div class="card">
+            <h4>Entrées vs Sorties (3 derniers mois)</h4>
+            <div class="body">
+              <!-- Stacked bars rudimentaires -->
+              <table>
+                <thead><tr><th>Mois</th><th style="width:70%">Volumes</th><th>Δ</th></tr></thead>
+                <tbody>
+                  <tr><td>07/2025</td><td>
+                    <div style="display:flex;height:12px;border:1px solid #e5e7eb;border-radius:6px;overflow:hidden">
+                      <span style="width:58%;background:#10b981" title="Entrées"></span>
+                      <span style="width:42%;background:#f59e0b" title="Sorties"></span>
+                    </div>
+                  </td><td class="hint">+16%</td></tr>
+                  <tr><td>08/2025</td><td>
+                    <div style="display:flex;height:12px;border:1px solid #e5e7eb;border-radius:6px;overflow:hidden">
+                      <span style="width:51%;background:#10b981"></span>
+                      <span style="width:49%;background:#f59e0b"></span>
+                    </div>
+                  </td><td class="hint">+2%</td></tr>
+                  <tr><td>09/2025</td><td>
+                    <div style="display:flex;height:12px;border:1px solid #e5e7eb;border-radius:6px;overflow:hidden">
+                      <span style="width:47%;background:#10b981"></span>
+                      <span style="width:53%;background:#f59e0b"></span>
+                    </div>
+                  </td><td class="hint">-6%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Retards de livraison (Top fournisseurs)</h4>
+            <div class="body">
+              <table>
+                <thead><tr><th>Fournisseur</th><th>Retard moyen</th><th>Respect délais</th></tr></thead>
+                <tbody>
+                  <tr><td>SUP_A</td><td>2,1 j</td><td>92 %</td></tr>
+                  <tr><td>SUP_B</td><td>3,4 j</td><td>88 %</td></tr>
+                  <tr><td>SUP_C</td><td>1,6 j</td><td>95 %</td></tr>
+                  <tr><td>SUP_D</td><td>4,0 j</td><td>80 %</td></tr>
+                </tbody>
+              </table>
+              <p class="hint">Mesures fictives à visée illustrative.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL FOURNISSEURS -->
+      <section id="panel-fournisseurs" class="panel" role="tabpanel">
+        <div class="grid">
+          <div class="card">
+            <h4>Qualité fournisseur (score synthétique)</h4>
+            <div class="body">
+              <table>
+                <thead><tr><th>Fournisseur</th><th>Score qualité</th><th>Tendance</th></tr></thead>
+                <tbody>
+                  <tr><td>SUP_A</td><td>84 / 100</td><td><span class="delta up">↗</span></td></tr>
+                  <tr><td>SUP_B</td><td>73 / 100</td><td><span class="delta down">↘</span></td></tr>
+                  <tr><td>SUP_C</td><td>91 / 100</td><td><span class="delta up">↗</span></td></tr>
+                  <tr><td>SUP_D</td><td>67 / 100</td><td><span class="delta down">↘</span></td></tr>
+                </tbody>
+              </table>
+              <p class="hint">Combinaison (délais, conformité, litiges) — formule non exposée.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Répartition commandes par fournisseur</h4>
+            <div class="body">
+              <!-- pseudo “camembert” horizontal -->
+              <table>
+                <thead><tr><th>Fournisseur</th><th style="width:70%">Part</th></tr></thead>
+                <tbody>
+                  <tr><td>SUP_A</td><td><div style="height:12px;background:#e8eefc;border:1px solid #d9e3ff;border-radius:6px;position:relative"><span style="position:absolute;left:0;top:-2px;height:12px;width:38%;background:#2563eb;border-radius:6px"></span></div></td></tr>
+                  <tr><td>SUP_B</td><td><div style="height:12px;background:#e8eefc;border:1px solid #d9e3ff;border-radius:6px;position:relative"><span style="position:absolute;left:0;top:-2px;height:12px;width:27%;background:#2563eb;border-radius:6px"></span></div></td></tr>
+                  <tr><td>SUP_C</td><td><div style="height:12px;background:#e8eefc;border:1px solid #d9e3ff;border-radius:6px;position:relative"><span style="position:absolute;left:0;top:-2px;height:12px;width:21%;background:#2563eb;border-radius:6px"></span></div></td></tr>
+                  <tr><td>SUP_D</td><td><div style="height:12px;background:#e8eefc;border:1px solid #d9e3ff;border-radius:6px;position:relative"><span style="position:absolute;left:0;top:-2px;height:12px;width:14%;background:#2563eb;border-radius:6px"></span></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL RH -->
+      <section id="panel-rh" class="panel" role="tabpanel">
+        <div class="grid">
+          <div class="card">
+            <h4>RH logistique (agrégats non nominatifs)</h4>
+            <div class="body">
+              <table>
+                <thead><tr><th>Site</th><th>Effectif</th><th>Polyvalence</th><th>Formations récentes</th></tr></thead>
+                <tbody>
+                  <tr><td>SITE_A</td><td>42</td><td>3,1/5</td><td>12</td></tr>
+                  <tr><td>SITE_B</td><td>28</td><td>2,7/5</td><td>8</td></tr>
+                  <tr><td>SITE_C</td><td>36</td><td>3,4/5</td><td>10</td></tr>
+                </tbody>
+              </table>
+              <p class="hint">Données fictives ; aucune information nominative.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Notes</h4>
+            <div class="body">
+              <ul>
+                <li>Les graphes et chiffres sont des placeholders anonymisés.</li>
+                <li>Le modèle sémantique centralise les KPI pour cohérence.</li>
+                <li>La chaîne ETL journalise les contrôles pour traçabilité.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <p class="hint">Ce mockup reproduit la structure d’un tdb logistique sans exposer de données réelles. Intégration autonome (HTML/CSS/JS vanilla).</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Résultats & impacts</h2>
+    <ul>
+      <li>Refreshs plus rapides et périmètre étendu sans dégrader la performance (extractions ~40 min ➜ ~10 min avec périmètre élargi).</li>
+      <li>Qualité de données renforcée (contrôles, traçabilité), baisse des incidents en production.</li>
+      <li>Décisionnel fiabilisé et temps d’analyse réduit pour piloter la réduction des stocks et la qualité de service.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Outils utilisés</h2>
+    <p>Talend Open Studio (ETL, orchestration, performances) · Oracle SQL Developer (SQL, optimisation, modèle) · Power BI Desktop (modèle sémantique, rapports) · Power Query (transformations légères, paramétrage de refresh) · Excel/Power Query (contrôles ponctuels).</p>
+  </section>
+
+  <section>
+    <h2>Compétences clés mises en œuvre</h2>
+    <p>ETL & orchestration · Modélisation dimensionnelle (étoile) · SQL & optimisation · Data Quality & traçabilité · DataViz opérationnelle · Gouvernance & run mensuel.</p>
+  </section>
+
+  <a href="../index.html" class="btn back">← Retour au portfolio</a>
+</main>
+
+<!-- Script du mockup -->
+<script>
+  (function(){
+    const root = document.getElementById('mockup-bi'); if(!root) return;
+    const tabs = root.querySelectorAll('.tab');
+    const panels = {
+      'stocks': root.querySelector('#panel-stocks'),
+      'commandes': root.querySelector('#panel-commandes'),
+      'fournisseurs': root.querySelector('#panel-fournisseurs'),
+      'rh': root.querySelector('#panel-rh'),
+    };
+    tabs.forEach(t=>{
+      t.addEventListener('click', ()=>{
+        tabs.forEach(x=>x.setAttribute('aria-selected','false'));
+        t.setAttribute('aria-selected','true');
+        Object.values(panels).forEach(p=>p.classList.remove('active'));
+        const id = t.dataset.tab; if(panels[id]) panels[id].classList.add('active');
+      });
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Étude de cas — Dépenses de santé & dépassements d'honoraires</title>
+  <meta name="description" content="Application Python orientée objets pour analyser les dépenses de santé (2019, Nord), produire des rapports mensuels/annuels, stocker en SQLite et générer des sorties XML/XSL."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="stylesheet" href="../style.css"/>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;line-height:1.6;color:#0b1220}
+    .container{max-width:1080px;margin:0 auto;padding:24px}
+    .hero{background:#0b1324;color:#fff;padding:42px 0;margin-bottom:24px}
+    .hero-title{margin:0 0 8px;font-size:32px}
+    .hero-sub{margin:0 0 12px;opacity:.9}
+    .badges .badge{display:inline-block;background:#1e2a4a;color:#dbe6ff;border:1px solid #2c3a66;padding:4px 10px;margin-right:8px;border-radius:999px;font-size:12px}
+    .breadcrumbs a{color:#cdd8ff;text-decoration:none}
+    .banner{background:#f6f8fc;border:1px solid #e4e9f2;padding:12px 14px;border-radius:10px;margin:10px 0 24px}
+    .h-row{display:grid;grid-template-columns:1.6fr .9fr;gap:24px;align-items:start}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .kpi{background:#fafbfe;border:1px solid #e8edf7;border-radius:12px;padding:10px;text-align:center;font-size:14px}
+    .ba{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .ba .box{border:1px solid #e6eaf3;border-radius:10px;padding:10px;background:#fcfdff}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .gallery img{width:100%;border:1px solid #e6e6e6;border-radius:10px}
+    pre{background:#0f172a;color:#e2e8f0;border:1px solid #1e293b;border-radius:12px;padding:14px;overflow:auto;font-size:13px;margin:12px 0}
+    code{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
+    h2 strong, h3 strong{font-weight:700}
+    h2{margin-top:26px}
+    ul{margin:6px 0 12px 18px}
+    .meta{font-size:13px;color:#5b6477}
+    .note{font-size:13px;color:#39445a;background:#eef3ff;border-left:3px solid #5c7cfa;padding:8px 10px;border-radius:6px}
+    .btn.back{display:inline-block;margin-top:20px;border:1px solid #d0d7e2;padding:10px 12px;border-radius:8px;text-decoration:none;color:#0b1324}
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="breadcrumbs"><a href="../index.html">← Retour</a></div>
+    <h1 class="hero-title">Étude de cas — Dépenses de santé & dépassements d'honoraires</h1>
+    <p class="hero-sub">Python OOP • Indicateurs • Visualisations • SQLite • XML/DTD • XSL</p>
+    <div class="badges">
+      <span class="badge">Python</span><span class="badge">pandas</span><span class="badge">matplotlib</span>
+      <span class="badge">SQLite</span><span class="badge">XML/XSL</span>
+    </div>
+  </div>
+</header>
+
+<main class="container page">
+
+  <div class="banner"><strong>Résumé</strong> — Étude de cas pour l’Assurance Maladie sur 2019 (département du Nord). Objectifs : outiller l’aide à la décision pour suivre les dépenses et les dépassements d’honoraires des spécialistes, automatiser le traitement mensuel et produire des rapports.</div>
+
+  <section class="h-row">
+    <div>
+      <h2><strong>Contexte & objectifs</strong></h2>
+      <p>Cette étude s’inscrit dans la politique de maîtrise des dépenses et d’accès équitable aux soins. Elle vise à automatiser l’ingestion des fichiers mensuels (RS2019xx) et à produire des indicateurs par CPAM et par spécialité, avec une restitution mensuelle/annuelle et une extension Data Mining (mise en relation avec des données population/offre de soins).</p>
+      <ul>
+        <li>Réduire les dépenses liées aux pratiques tarifaires excessives.</li>
+        <li>Fournir des tableaux de bord réguliers et reproductibles.</li>
+        <li>Structurer le code en Python orienté objets pour garantir la maintenabilité.</li>
+      </ul>
+
+      <h2><strong>Périmètre</strong></h2>
+      <ul>
+        <li>Département du Nord (code 59).</li>
+        <li>Prestations ciblées : consultations (ex. 1101, 1102, …, 1216, 1140).</li>
+        <li>Spécialités : gériatrie, psychiatrie, ophtalmologie, pneumologie, rhumatologie, ORL, dermatologie.</li>
+      </ul>
+    </div>
+    <aside>
+      <h2><strong>Stack</strong></h2>
+      <div class="kpis">
+        <div class="kpi"><strong>Données</strong><br/>CSV publics 2019</div>
+        <div class="kpi"><strong>Python</strong><br/>OOP, pandas</div>
+        <div class="kpi"><strong>Base</strong><br/>SQLite/MySQL</div>
+        <div class="kpi"><strong>Viz</strong><br/>matplotlib</div>
+        <div class="kpi"><strong>XML</strong><br/>DTD, XSL</div>
+      </div>
+      <p class="meta" style="margin-top:10px">Flux : ingestion → structuration OOP → analyses/indicateurs → visualisations → export en base et XML/XSL.</p>
+    </aside>
+  </section>
+
+  <section>
+    <h2><strong>Modèle objet (classes métiers)</strong></h2>
+    <p>Le modèle encapsule les entités CPAM, spécialité, prestation, remboursement et soin. Il permet un chargement clair, des validations élémentaires et des exports standardisés.</p>
+    <pre><code class="language-python"># soins/model.py
+from dataclasses import dataclass
+
+@dataclass
+class Cpam:
+    numb: str
+    cpam: str
+    l_cpam: str
+    dpt: str
+    l_dpt: str
+
+@dataclass
+class Specialite:
+    numS: str
+    exe_spe: str
+    l_exe_spe: str
+    exe_stj1: str
+    l_exe_stj1: str
+
+@dataclass
+class Prestation:
+    nump: str
+    prs_nat: str
+    l_prs_nat: str
+
+@dataclass
+class Remboursement:
+    numR: str
+    rec_mon: float  # base de remboursement
+    rem_mon: float  # montant remboursé
+
+@dataclass
+class Soin:
+    nums: str
+    cpam: Cpam
+    spe: Specialite
+    pres: Prestation
+    remb: Remboursement
+
+    def montant_net(self) -> float:
+        return float(self.remb.rem_mon)</code></pre>
+  </section>
+
+  <section>
+    <h2><strong>ETL et filtrage (Nord/consultations)</strong></h2>
+    <p>Chargement d’un fichier mensuel, normalisation des montants (virgule → point), filtrage sur le département 59 et les prestations de consultation, puis export d’un CSV normalisé.</p>
+    <pre><code class="language-python"># notebooks/etl.py
+import pandas as pd
+from pathlib import Path
+
+DATA_DIR = Path("data")      # RS2019xx.csv
+OUT_DIR  = Path("exports")
+OUT_DIR.mkdir(exist_ok=True, parents=True)
+
+df = pd.read_csv(DATA_DIR / "RS201901.csv", sep=",", dtype=str, low_memory=False)
+
+# Conversion num (virgules -> points)
+for c in ["rec_mon", "rem_mon"]:
+    df[c] = (df[c].str.replace(",", ".", regex=False)).astype(float)
+
+DEPARTEMENTS = {"59": "Nord"}
+PRESTATIONS  = {'1101','1102','1103','1104','1111','1112','1113','1114',
+                '1211','1212','1213','1214','1215','1216','1140'}
+
+mask = df["dpt"].isin(DEPARTEMENTS.keys()) & df["prs_nat"].isin(PRESTATIONS)
+df_nord = df[mask].copy()
+
+df_nord.to_csv(OUT_DIR / "mois01.csv", index=False)
+print(len(df), "lignes -> Nord+consultations:", len(df_nord))</code></pre>
+  </section>
+
+  <section>
+    <h2><strong>Indicateurs et tableaux croisés</strong></h2>
+    <p>Calcul d’indicateurs agrégés, corrélation base/remboursement, top spécialités (par nombre d’actes et total remboursé) et sauvegarde d’extraits CSV.</p>
+    <pre><code class="language-python"># notebooks/indicateurs.py
+import pandas as pd
+
+df = pd.read_csv("exports/mois01.csv")
+
+resume = {
+    "nb_actes": len(df),
+    "remb_total": float(df["rem_mon"].sum()),
+    "base_total": float(df["rec_mon"].sum()),
+    "remb_moyen": float(df["rem_mon"].mean()),
+}
+print(resume)
+
+corr = df[["rec_mon", "rem_mon"]].corr().loc["rec_mon", "rem_mon"]
+print("Corrélation(rec_mon, rem_mon) =", round(corr, 3))
+
+freq_spe = (df.groupby("l_exe_spe")["rem_mon"]
+              .agg(nb_actes="count", remb_total="sum")
+              .sort_values("remb_total", ascending=False))
+freq_spe.head(10).to_csv("exports/freq_spe_top10.csv")</code></pre>
+  </section>
+
+  <section>
+    <h2><strong>Persistance en base (SQLite)</strong></h2>
+    <p>Création d’une base <code>SanteBD.sqlite</code> et d’une table d’indicateurs mensuels. Insertion d’une ligne d’exemple pour janvier 2019 (Nord).</p>
+    <pre><code class="language-python"># notebooks/sqlite_export.py
+import sqlite3
+import pandas as pd
+
+conn = sqlite3.connect("SanteBD.sqlite")
+cur = conn.cursor()
+
+cur.execute("""
+CREATE TABLE IF NOT EXISTS stat_mensuelle (
+  annee INTEGER,
+  mois INTEGER,
+  dpt TEXT,
+  nb_actes INTEGER,
+  remb_total REAL,
+  base_total REAL,
+  remb_moyen REAL,
+  PRIMARY KEY (annee, mois, dpt)
+)
+""")
+
+df = pd.read_csv("exports/mois01.csv")
+row = (
+  2019, 1, "59",
+  int(len(df)),
+  float(df["rem_mon"].sum()),
+  float(df["rec_mon"].sum()),
+  float(df["rem_mon"].mean())
+)
+cur.execute("""
+INSERT OR REPLACE INTO stat_mensuelle
+(annee, mois, dpt, nb_actes, remb_total, base_total, remb_moyen)
+VALUES (?, ?, ?, ?, ?, ?, ?)
+""", row)
+
+conn.commit()
+conn.close()</code></pre>
+  </section>
+
+  <section>
+    <h2><strong>Génération d’images (visualisations)</strong></h2>
+
+    <pre><code class="language-python"># notebooks/plots.py
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("exports/mois01.csv")
+
+# Histogramme de la base de remboursement
+plt.figure()
+df["rec_mon"].plot(kind="hist", bins=30)
+plt.xlabel("Base de remboursement (rec_mon)")
+plt.title("Distribution de la base de remboursement — Jan 2019 (Nord)")
+plt.tight_layout()
+plt.savefig("../images/soins_histogramme.png", dpi=200)
+plt.close()
+
+# Corrélation rem_mon vs rec_mon
+plt.figure()
+plt.scatter(df["rec_mon"], df["rem_mon"], s=6)
+plt.xlabel("Base (rec_mon)")
+plt.ylabel("Montant remboursé (rem_mon)")
+plt.title("Montant remboursé vs Base — Jan 2019 (Nord)")
+plt.tight_layout()
+plt.savefig("../images/soins_corr.png", dpi=200)
+plt.close()
+
+# Top 10 spécialités par montant remboursé
+top = (df.groupby("l_exe_spe")["rem_mon"].sum().sort_values(ascending=False).head(10))
+plt.figure()
+top.plot(kind="barh")
+plt.gca().invert_yaxis()
+plt.xlabel("Total remboursé")
+plt.title("Top 10 spécialités — Jan 2019 (Nord)")
+plt.tight_layout()
+plt.savefig("../images/soins_top_spe.png", dpi=200)
+plt.close()</code></pre>
+
+    <div class="gallery">
+      <img src="../images/soins_histogramme.png" alt="Histogramme rec_mon">
+      <img src="../images/soins_corr.png" alt="Corrélation rem_mon vs rec_mon">
+      <img src="../images/soins_top_spe.png" alt="Top spécialités par remboursement">
+    </div>
+    
+  </section>
+
+  <section>
+    <h2><strong>Extension Data Mining (XML, DTD, XSL)</strong></h2>
+    <p>Intégration de données contextuelles (population, offre de soins) et modélisation en XML validée par DTD. Transformation XSL pour produire des synthèses HTML.</p>
+
+    <h3><strong>Fichier XML (extrait)</strong></h3>
+    <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;depenses annee="2019" region="Hauts-de-France"&gt;
+  &lt;departement code="59" nom="Nord"&gt;
+    &lt;population&gt;
+      &lt;indicateur nom="revenu_fiscal_median" valeur="20000"/&gt;
+      &lt;indicateur nom="foyers_fiscaux" valeur="1300000"/&gt;
+    &lt;/population&gt;
+    &lt;offre_soins&gt;
+      &lt;specialite nom="Ophtalmologie" densite="3.2"/&gt;
+      &lt;specialite nom="Psychiatrie" densite="2.1"/&gt;
+    &lt;/offre_soins&gt;
+    &lt;mois numero="01"&gt;
+      &lt;indicateur nom="remb_total" valeur="12345678.90"/&gt;
+      &lt;indicateur nom="base_total" valeur="12000000.00"/&gt;
+      &lt;indicateur nom="nb_actes" valeur="98765"/&gt;
+    &lt;/mois&gt;
+  &lt;/departement&gt;
+&lt;/depenses&gt;</code></pre>
+
+    <h3><strong>DTD de validation (extrait)</strong></h3>
+    <pre><code class="language-xml">&lt;!ELEMENT depenses (departement+)&gt;
+&lt;!ATTLIST depenses annee CDATA #REQUIRED region CDATA #REQUIRED&gt;
+
+&lt;!ELEMENT departement (population, offre_soins, mois+)&gt;
+&lt;!ATTLIST departement code CDATA #REQUIRED nom CDATA #REQUIRED&gt;
+
+&lt;!ELEMENT population (indicateur+)&gt;
+&lt;!ELEMENT offre_soins (specialite+)&gt;
+&lt;!ELEMENT mois (indicateur+)&gt;
+&lt;!ATTLIST mois numero CDATA #REQUIRED&gt;
+
+&lt;!ELEMENT indicateur EMPTY&gt;
+&lt;!ATTLIST indicateur nom CDATA #REQUIRED valeur CDATA #REQUIRED&gt;
+
+&lt;!ELEMENT specialite EMPTY&gt;
+&lt;!ATTLIST specialite nom CDATA #REQUIRED densite CDATA #REQUIRED&gt;</code></pre>
+
+    <h3><strong>XSL de synthèse (extrait)</strong></h3>
+    <pre><code class="language-xml">&lt;xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+
+  &lt;xsl:template match="/"&gt;
+    &lt;html&gt;&lt;head&gt;
+      &lt;meta charset="utf-8"/&gt;
+      &lt;title&gt;Synthèse dépenses — &lt;xsl:value-of select="depenses/@annee"/&gt;&lt;/title&gt;
+    &lt;/head&gt;&lt;body&gt;
+      &lt;h1&gt;Hauts-de-France — &lt;xsl:value-of select="depenses/@annee"/&gt;&lt;/h1&gt;
+      &lt;xsl:for-each select="depenses/departement"&gt;
+        &lt;h2&gt;Dpt &lt;xsl:value-of select="@code"/&gt; — &lt;xsl:value-of select="@nom"/&gt;&lt;/h2&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Population: &lt;xsl:value-of select="population/indicateur[@nom='foyers_fiscaux']/@valeur"/&gt;&lt;/li&gt;
+          &lt;li&gt;Mois: 
+            &lt;xsl:for-each select="mois"&gt;
+              &lt;xsl:value-of select="@numero"/&gt;&lt;xsl:text&gt; &lt;/xsl:text&gt;
+            &lt;/xsl:for-each&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/xsl:for-each&gt;
+    &lt;/body&gt;&lt;/html&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</code></pre>
+
+    <h3><strong>Validation et parsing XML en Python (exemple)</strong></h3>
+    <pre><code class="language-python"># notebooks/xml_tools.py
+from lxml import etree
+
+# Validation DTD
+xml_doc = etree.parse("depenses.xml")
+dtd = etree.DTD(open("depenses.dtd", "r", encoding="utf-8"))
+print("DTD valide ?", dtd.validate(xml_doc))
+
+# Extraction simple
+tree = etree.parse("depenses.xml")
+for mois in tree.xpath("//departement[@code='59']/mois/@numero"):
+    print("Mois:", mois)</code></pre>
+  </section>
+
+  <section class="h-row">
+    <div>
+      <h2><strong>Résultats</strong></h2>
+      <ul>
+        <li>Pipeline reproductible pour l’année 2019 (Nord) : extraction, filtrage, indicateurs, visualisations.</li>
+        <li>Corrélation forte entre base et montant remboursé (~0,98) confirmée.</li>
+        <li>Classements par spécialité et analyses par CPAM disponibles.</li>
+        <li>Stockage pérenne en SQLite et export XML validé par DTD, prêt pour XSL.</li>
+      </ul>
+    </div>
+    <aside>
+      <h2><strong>Avant → Après</strong></h2>
+      <div class="ba">
+        <div class="box"><strong>Avant</strong><br/>Données brutes massives, scripts ponctuels, analyses difficiles à reproduire.</div>
+        <div class="box"><strong>Après</strong><br/>Application modulaire, indicateurs standardisés, visualisations exportables, base et XML/XSL.</div>
+      </div>
+    </aside>
+  </section>
+
+  <section>
+    <h2><strong>Livrables</strong></h2>
+    <ul>
+      <li>Module Python OOP (<code>soins/</code>) et notebooks ETL/analyses.</li>
+      <li>Exports CSV mensuels filtrés.</li>
+      <li>Base <code>SanteBD.sqlite</code> avec table <code>stat_mensuelle</code>.</li>
+      <li>Fichiers <code>depenses.xml</code>, <code>depenses.dtd</code>, <code>synthese.xsl</code>.</li>
+      <li>Images PNG pour le portfolio : <code>soins_histogramme.png</code>, <code>soins_corr.png</code>, <code>soins_top_spe.png</code>.</li>
+    </ul>
+  </section>
+
+ 
+  <a href="../index.html" class="btn back">← Retour au portfolio</a>
+</main>
+</body>
+</html>

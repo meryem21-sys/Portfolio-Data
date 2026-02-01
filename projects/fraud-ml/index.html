@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Détection de fraude carte bancaire — Machine Learning</title>
+  <meta name="description" content="Projet ML sur données déséquilibrées : préparation, équilibrage (undersampling/oversampling/SMOTE), pipelines scikit-learn, GridSearchCV, calibration du seuil, métriques F1/Recall/PR-AUC."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="stylesheet" href="../style.css"/>
+  <style>
+    /* Optionnel : styles minimaux si ton style.css ne gère pas ces classes */
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;line-height:1.6;color:#111}
+    .container{max-width:1000px;margin:0 auto;padding:24px}
+    .hero{background:#0b1324;color:#fff;padding:40px 0;margin-bottom:24px}
+    .hero-title{margin:0 0 8px;font-size:32px}
+    .hero-sub{margin:0 0 10px;opacity:.85}
+    .badges .badge{display:inline-block;background:#1f2a44;color:#dbe6ff;border:1px solid #2b3b66;padding:4px 8px;margin-right:8px;border-radius:999px;font-size:12px}
+    .banner{background:#f5f7fb;border:1px solid #e3e8f4;padding:10px 14px;border-radius:8px;margin-bottom:24px}
+    .h-row{display:grid;grid-template-columns:1.6fr .9fr;gap:24px;align-items:start}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .kpi{background:#f7f7f8;border:1px solid #ececec;border-radius:12px;padding:10px;text-align:center;font-size:14px}
+    .ba{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .ba .box{border:1px solid #e6e6e6;border-radius:10px;padding:10px;background:#fcfcfd}
+    .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .gallery img{width:100%;border:1px solid #e6e6e6;border-radius:10px}
+    .code{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:14px;overflow:auto;font-size:13px;border:1px solid #1e293b}
+    pre{margin:0}
+    .btn.back{display:inline-block;margin-top:20px;border:1px solid #d0d7e2;padding:10px 12px;border-radius:8px;text-decoration:none;color:#0b1324}
+    h2 strong, h3 strong{font-weight:700}
+    h2{margin-top:22px}
+    ul{margin:0 0 12px 18px}
+    .meta{font-size:13px;color:#555}
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="breadcrumbs"><a href="../index.html" style="color:#c8d3ff">← Retour</a></div>
+    <h1 class="hero-title">Détection de fraude — Machine Learning</h1>
+    <p class="hero-sub">Données déséquilibrées • Pipelines scikit-learn • Équilibrage (SMOTE) • GridSearchCV • Calibration du seuil</p>
+    <div class="badges"><span class="badge">Python</span><span class="badge">pandas</span><span class="badge">scikit-learn</span><span class="badge">imblearn</span><span class="badge">matplotlib</span></div>
+  </div>
+</header>
+
+<main class="container page">
+  <div class="banner"><strong>Résumé du dataset</strong> — 284 807 transactions, 492 fraudes (≈0,172 %). Variables : V1–V28 (PCA), Time, Amount, Class.</div>
+
+  <section class="h-row">
+    <div>
+      <h2><strong>Contexte & objectif</strong></h2>
+      <p>Détection automatique des transactions frauduleuses dans un jeu de données fortement déséquilibré. Objectif : maximiser la détection (rappel) tout en maîtrisant les faux positifs par calibration du seuil et choix de métriques adaptées (PR-AUC, F1).</p>
+
+      <h2><strong>Méthodologie</strong></h2>
+      <ul>
+        <li>Exploration, contrôle des valeurs manquantes, analyse des distributions et corrélations.</li>
+        <li>Prétraitement : scaling de <code>Amount</code> et/ou <code>Time</code>, split stratifié train/test.</li>
+        <li>Équilibrage : undersampling/oversampling et SMOTE au sein d’un pipeline.</li>
+        <li>Modèles comparés : Régression Logistique, SVM, Arbre de Décision, RandomForest.</li>
+        <li>Validation : GridSearchCV, métriques F1/Recall/PR-AUC, matrice de confusion, calibration du seuil.</li>
+      </ul>
+    </div>
+    <aside>
+      <h2><strong>Stack</strong></h2>
+      <div class="kpis">
+        <div class="kpi"><strong>Data</strong><br/>pandas • NumPy</div>
+        <div class="kpi"><strong>ML</strong><br/>scikit-learn • imblearn</div>
+        <div class="kpi"><strong>Viz</strong><br/>matplotlib</div>
+      </div>
+      <p class="meta" style="margin-top:10px">Processus reproductible avec pipelines, validation croisée, rapport de métriques et courbes ROC/PR.</p>
+    </aside>
+  </section>
+
+  <section>
+    <h2><strong>Pipeline de préparation</strong></h2>
+    <div class="code"><pre><code class="language-python">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.compose import ColumnTransformer
+
+df = pd.read_csv("creditcard.csv")
+X = df.drop(columns=["Class"])
+y = df["Class"]
+
+num_to_scale = ["Amount", "Time"]
+preproc = ColumnTransformer(
+    [("scaler", StandardScaler(), num_to_scale)],
+    remainder="passthrough"
+)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, stratify=y, random_state=42
+)</code></pre></div>
+  </section>
+
+  <section>
+    <h2><strong>Équilibrage et modèles</strong></h2>
+    <p>Exemple de pipeline avec SMOTE et RandomForest, puis grille d’hyperparamètres et validation croisée. SMOTE est appliqué uniquement sur le set d’entraînement via le pipeline pour éviter les fuites.</p>
+    <div class="code"><pre><code class="language-python">from imblearn.pipeline import Pipeline
+from imblearn.over_sampling import SMOTE
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import classification_report
+
+pipe_rf = Pipeline(steps=[
+    ("prep", preproc),
+    ("smote", SMOTE(random_state=42, k_neighbors=5)),
+    ("clf", RandomForestClassifier(random_state=42, n_jobs=-1))
+])
+
+param_grid = {
+    "clf__n_estimators": [200, 400],
+    "clf__max_depth": [None, 12, 20],
+    "clf__min_samples_split": [2, 5],
+}
+
+grid = GridSearchCV(
+    pipe_rf, param_grid=param_grid, cv=5,
+    scoring="f1", n_jobs=-1, verbose=1
+)
+grid.fit(X_train, y_train)
+
+y_pred = grid.predict(X_test)
+print(grid.best_params_)
+print(classification_report(y_test, y_pred, digits=3))</code></pre></div>
+
+    <p>Exemple SVM avec rééquilibrage intégré via la pondération des classes, utile lorsque l’échantillonnage n’est pas souhaité :</p>
+    <div class="code"><pre><code class="language-python">from sklearn.svm import SVC
+from sklearn.model_selection import StratifiedKFold
+
+pipe_svm = Pipeline(steps=[
+    ("prep", preproc),
+    ("clf", SVC(kernel="rbf", class_weight="balanced", probability=True, random_state=42))
+])
+
+param_svm = {
+    "clf__C": [0.5, 1, 4],
+    "clf__gamma": ["scale", 0.1, 0.01]
+}
+
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+grid_svm = GridSearchCV(pipe_svm, param_grid=param_svm, cv=cv, scoring="f1", n_jobs=-1)
+grid_svm.fit(X_train, y_train)</code></pre></div>
+  </section>
+
+  <section>
+    <h2><strong>Calibration du seuil</strong></h2>
+    <p>Pour maîtriser les faux positifs, la prédiction probabiliste est calibrée par recherche d’un seuil optimal selon le contexte métier (maximisation du F1 ou contrainte sur le rappel).</p>
+    <div class="code"><pre><code class="language-python">import numpy as np
+from sklearn.metrics import f1_score, precision_recall_curve
+
+# Exemple sur le meilleur modèle au format predict_proba
+proba = grid.best_estimator_.predict_proba(X_test)[:, 1]
+prec, rec, thr = precision_recall_curve(y_test, proba)
+
+# Seuil qui maximise F1
+def best_f1_threshold(y_true, p):
+    ts = np.linspace(0.01, 0.99, 99)
+    scores = [f1_score(y_true, (p &gt;= t).astype(int)) for t in ts]
+    t_best = ts[int(np.argmax(scores))]
+    return t_best, max(scores)
+
+t_star, f1_star = best_f1_threshold(y_test, proba)
+y_pred_thr = (proba &gt;= t_star).astype(int)
+print("Seuil optimal F1:", round(t_star, 3))
+print(classification_report(y_test, y_pred_thr, digits=3))</code></pre></div>
+  </section>
+
+  <section class="h-row">
+    <div>
+      <h2><strong>Métriques & rapport</strong></h2>
+      <div class="code"><pre><code class="language-python">from sklearn.metrics import confusion_matrix, classification_report, average_precision_score, roc_auc_score
+
+cm = confusion_matrix(y_test, y_pred_thr)
+print(cm)
+print(classification_report(y_test, y_pred_thr, digits=3))
+
+pr_auc = average_precision_score(y_test, proba)  # PR-AUC
+roc = roc_auc_score(y_test, proba)               # ROC-AUC
+print("PR-AUC:", round(pr_auc, 4), "ROC-AUC:", round(roc, 4))</code></pre></div>
+    </div>
+    <aside>
+      <h2><strong>Avant → Après</strong></h2>
+      <div class="ba">
+        <div class="box"><strong>Avant</strong><br/>Déséquilibre fort, rappel faible sur la classe fraude.</div>
+        <div class="box"><strong>Après</strong><br/>Équilibrage + calibration du seuil, amélioration nette du F1 et du rappel.</div>
+      </div>
+    </aside>
+  </section>
+
+  <section>
+    <h2><strong>Visualisations</strong></h2>
+   
+    <div class="gallery">
+      <img src="../images/fraud_confmatrix.png" alt="Matrice de confusion">
+      
+    </div>
+    <div class="code"><pre><code class="language-python">import matplotlib.pyplot as plt
+from sklearn.metrics import roc_curve, precision_recall_curve
+
+# Courbe ROC
+fpr, tpr, _ = roc_curve(y_test, proba)
+plt.figure()
+plt.plot(fpr, tpr, label="ROC")
+plt.plot([0,1],[0,1], linestyle="--")
+plt.xlabel("FPR")
+plt.ylabel("TPR")
+plt.title("ROC")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# Courbe PR
+prec, rec, _ = precision_recall_curve(y_test, proba)
+plt.figure()
+plt.plot(rec, prec, label="PR")
+plt.xlabel("Recall")
+plt.ylabel("Precision")
+plt.title("Precision-Recall")
+plt.legend()
+plt.tight_layout()
+plt.show()</code></pre></div>
+  </section>
+
+  <section>
+    <h2><strong>Résultats </strong></h2>
+    <ul>
+      <li>RandomForest avec SMOTE : rappel élevé sur la classe fraude et F1 robuste après calibration.</li>
+      <li>SVM (class_weight="balanced") : bon compromis rappel/précision avec tuning de C et γ.</li>
+      <li>Rapports complets : F1/Recall/Precision par classe, PR-AUC et ROC-AUC sur l’ensemble de test.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><strong>Livrables</strong></h2>
+    <ul>
+      <li>Notebook/Script ML, pipelines et grilles d’hyperparamètres documentés.</li>
+      <li>Rapports de métriques, matrices de confusion, courbes ROC/PR.</li>
+      <li>Proposition de monitoring : suivi du drift, recalibrage périodique des seuils, alerting.</li>
+    </ul>
+  </section>
+
+ 
+
+  <a href="../index.html" class="btn back">← Retour au portfolio</a>
+</main>
+</body>
+</html>

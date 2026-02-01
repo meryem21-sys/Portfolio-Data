@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Analyse COVID-19 — Pipeline R</title>
+  <meta name="description" content="Pipeline reproductible depuis source publique : ingestion, wrangling, visualisations, rapports R Markdown."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="breadcrumbs"><a href="../index.html">← Retour</a></div>
+    <h1 class="hero-title">Analyse COVID-19 — R</h1>
+    <p class="hero-sub">Ingestion publique • Wrangling • Visualisations • Rapport R Markdown</p>
+    <div class="badges"><span class="badge">R</span><span class="badge">ggplot2</span><span class="badge">R Markdown</span></div>
+  </div>
+</header>
+
+<main class="container page">
+  <div class="banner">Données ouvertes — aucune information sensible. Reproductible.</div>
+
+  <section class="h-row">
+    <div>
+      <h2>🎯 Contexte & objectifs</h2>
+      <p>Créer un <strong>pipeline reproductible</strong> depuis une source publique pour suivre les indicateurs (cas, hosp., réa, décès), avec rapports automatisés.</p>
+
+      <h2>🧪 Méthodologie</h2>
+      <ul>
+        <li>Ingestion CSV depuis URL (data.gouv/GitHub), contrôle schéma.</li>
+        <li>Wrangling : nettoyage, agrégations temporelles, lissage éventuel.</li>
+        <li>Visualisations : séries, cartes, tableaux ; export <strong>R Markdown</strong> (HTML/PDF).</li>
+      </ul>
+    </div>
+    <aside>
+      <h2>📚 Stack</h2>
+      <div class="kpis">
+        <div class="kpi"><strong>Ingest</strong><br/>readr</div>
+        <div class="kpi"><strong>Wrangle</strong><br/>dplyr</div>
+        <div class="kpi"><strong>Viz</strong><br/>ggplot2</div>
+        <div class="kpi"><strong>Report</strong><br/>Rmd</div>
+      </div>
+      <p class="meta" style="margin-top:10px">🔗 Voir <a href="../process.html">Mon procédé</a> (data cleaning, dataviz, restitution).</p>
+    </aside>
+  </section>
+
+  <section>
+    <h2>🛠️ Mes actions</h2>
+    <ul>
+      <li>Construction d’un <strong>pipeline reproductible</strong> (script + Rmd).</li>
+      <li>Standardisation des indicateurs et des visuels.</li>
+      <li>Automatisation des exports et planification.</li>
+    </ul>
+  </section>
+
+  <section class="h-row">
+    <div>
+      <h2>📊 Résultats</h2>
+      <ul>
+        <li>Rapports réguliers, comparables et faciles à mettre à jour.</li>
+        <li>Gain de temps significatif vs consolidations manuelles.</li>
+      </ul>
+    </div>
+    <aside>
+      <h2>Avant → Après</h2>
+      <div class="ba">
+        <div class="box"><strong>Avant</strong><br/>Collecte manuelle, scripts épars, visuels hétérogènes.</div>
+        <div class="box"><strong>Après</strong><br/>Pipeline reproductible, rapports standardisés.</div>
+      </div>
+    </aside>
+  </section>
+
+  <section>
+    <h2>🖼️ Galerie</h2>
+    <div class="gallery">
+      <img src="../images/covid_plot_1.png" alt="Exemple de courbe d'incidence">
+      <img src="../images/covid_plot_2.png" alt="Exemple de tableau synthétique">
+    </div>
+  </section>
+
+  <section>
+    <h2>📦 Livrables</h2>
+    <ul>
+      <li>Scripts R + rapport R Markdown (HTML/PDF).</li>
+      <li>Mode opératoire (rafraîchissement, contrôle schéma).</li>
+    </ul>
+  </section>
+
+  <a href="../index.html" class="btn back">← Retour au portfolio</a>
+</main>
+</body>
+</html>

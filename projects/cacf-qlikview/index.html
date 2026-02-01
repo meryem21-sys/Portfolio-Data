@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>CACF — Contrôles automatisés (QlikView & SAS)</title>
+  <meta name="description" content="Développement d’une application de contrôle automatisé pour fiabiliser les reportings, assurer la traçabilité et faciliter la supervision des données."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="stylesheet" href="../style.css"/>
+
+  <!-- Styles du mockup (scopés pour éviter les conflits) -->
+  <style>
+    /* Wrapper et textes */
+    #mockup-qlik{margin-top:24px;border:1px solid #e5e7eb;border-radius:14px;background:#f6f7fb}
+    #mockup-qlik .wrap{max-width:1100px;margin:auto;padding:24px}
+    #mockup-qlik .title{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px}
+    #mockup-qlik .title h3{font-size:18px;margin:0}
+    #mockup-qlik .subtitle{color:#6b7280;font-size:13px}
+    /* Pastilles et cartes */
+    #mockup-qlik .pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 10px;font-size:12px;border:1px solid #e5e7eb;background:#ecfdf5;color:#065f46}
+    #mockup-qlik .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+    #mockup-qlik .card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    #mockup-qlik .card h4{font-size:15px;margin:0;padding:12px 14px;border-bottom:1px solid #e5e7eb}
+    #mockup-qlik .card .body{padding:14px}
+    /* Onglets */
+    #mockup-qlik .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+    #mockup-qlik .tab{padding:10px 14px;border-radius:10px;background:#e8eefc;color:#143e9e;border:1px solid #d9e3ff;cursor:pointer;user-select:none}
+    #mockup-qlik .tab[aria-selected="true"]{background:#2563eb;color:#fff;border-color:#2563eb}
+    /* Tables et KPI */
+    #mockup-qlik .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    #mockup-qlik .kpi{padding:12px;border-radius:12px;border:1px solid #e5e7eb;background:#fafbff}
+    #mockup-qlik .kpi .label{color:#6b7280;font-size:12px}
+    #mockup-qlik .kpi .val{font-size:18px;margin-top:6px}
+    #mockup-qlik table{width:100%;border-collapse:collapse}
+    #mockup-qlik th,#mockup-qlik td{padding:10px 8px;border-bottom:1px solid #e5e7eb;text-align:left}
+    #mockup-qlik th{font-size:12px;color:#6b7280;font-weight:600;background:#fafafa}
+    #mockup-qlik .status{display:inline-block;width:8px;height:8px;border-radius:50%}
+    #mockup-qlik .ok{background:#10b981}  /* vert */
+    #mockup-qlik .warn{background:#f59e0b}/* orange */
+    #mockup-qlik .ko{background:#ef4444}  /* rouge */
+    #mockup-qlik .hint{color:#6b7280;font-size:12px;margin-top:6px}
+    #mockup-qlik .legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+    #mockup-qlik .legend .item{display:flex;align-items:center;gap:6px;color:#6b7280;font-size:12px}
+    /* Panneaux d’onglets */
+    #mockup-qlik .panel{display:none}
+    #mockup-qlik .panel.active{display:block}
+    @media (max-width: 900px){ #mockup-qlik .grid{grid-template-columns:1fr} }
+
+    /* Petite mise en forme des blocs code */
+    pre{background:#0b1220;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;border:1px solid #0f172a}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:12.5px}
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <h1 class="hero-title">Application de contrôle — QlikView & SAS</h1>
+    <p class="hero-sub">Centralisation des contrôles • Automatisation • Traçabilité • Diffusion fiabilisée</p>
+    <div class="badges">
+      <span class="badge">QlikView</span>
+      <span class="badge">SAS (batch)</span>
+      <span class="badge">Datamart</span>
+      <span class="badge">Data Quality</span>
+      <span class="badge">SQL</span>
+    </div>
+  </div>
+</header>
+
+<main class="container page">
+  <div class="banner">Résumé public, données anonymisées et visuels génériques.</div>
+
+  <!-- Contexte professionnel -->
+  <section>
+    <h2>Contexte professionnel</h2>
+    <p>
+      Dans le cadre de mon alternance au Crédit Agricole Consumer Finance, j’ai occupé le poste de
+      <strong>Data Developer / Chargée de reporting et développement</strong> au sein du pôle Suivi d’Activité Commerce.
+      Ma mission : industrialiser les contrôles de données, automatiser les traitements et fiabiliser les
+      reportings diffusés en interne.
+    </p>
+  </section>
+
+  <!-- Contexte et objectifs -->
+  <section>
+    <h2>Contexte et objectifs</h2>
+    <p>
+      Le pôle s’appuie sur des tables du datamart pour produire les indicateurs métiers. L’objectif était de
+      développer un outil QlikView permettant de suivre les flux, contrôler la qualité (exactitude, complétude, cohérence, ponctualité),
+      assurer la traçabilité et la rejouabilité des traitements, et fiabiliser la diffusion.
+    </p>
+  </section>
+
+  <!-- Processus -->
+  <section>
+    <h2>Processus</h2>
+    <ol>
+      <li><strong>Développement local</strong> : évolutions en environnement interne.</li>
+      <li><strong>Mise en recette</strong> : déploiement sur serveur de test (miroir utilisateur).</li>
+      <li><strong>Recette</strong> : vérification fonctionnement + cohérence des données après migration.</li>
+      <li><strong>Mise en production</strong> : déploiement mensuel (deuxième mardi) pour les utilisateurs habilités.</li>
+    </ol>
+  </section>
+
+  <!-- Réalisations -->
+  <section>
+    <h2>Réalisations</h2>
+    <ul>
+      <li>Mise à jour de l’application SAV pour améliorer l’ergonomie et la lisibilité.</li>
+      <li>Refonte des écrans selon les besoins de l’équipe.</li>
+      <li>Affichage clair des indicateurs clés pour la supervision.</li>
+      <li>Contrôle de la mise à jour des tables du SI et du datamart.</li>
+      <li>Suivi des batchs (quotidiens, hebdomadaires, mensuels) et validation J-1.</li>
+      <li>Mise en place d’alertes sur paramètres manquants et contrôles de cohérence.</li>
+    </ul>
+  </section>
+
+  <!-- Rôle technique détaillé -->
+  <section>
+    <h2>Rôle technique détaillé</h2>
+    <ul>
+      <li><strong>SAS</strong> : scripts batch et macros génériques (collecte, contrôles DQM, logs, rejouabilité).</li>
+      <li><strong>QlikView</strong> : scripts de chargement, modélisation simple, tableaux de bord (Accueil, MAJ Tables, MAJ Batch, Écarts, Alerteur).</li>
+      <li><strong>Visualisation</strong> : vues synthétiques J vs J-1 pour localiser les écarts ; mise en évidence des alertes et paramètres manquants.</li>
+      <li><strong>Run & communication</strong> : procédures d’exploitation, diffusion mensuelle, information des utilisateurs et participation aux recettes.</li>
+    </ul>
+  </section>
+
+  <!-- Exemples de code (anonymisés) -->
+  <section>
+    <h2>Exemples de code (anonymisés)</h2>
+
+    <h3>SAS — import CSV générique + contrôle simple</h3>
+    <pre><code>/* Paramètres génériques (anonymisés) */
+%let SRC=/data/in/; %let LOG=/data/logs/;
+
+/* Import CSV */
+proc import datafile="&SRC./extrait_quoti.csv" out=wrk.input dbms=csv replace;
+  guessingrows=max;
+run;
+
+/* Contrôle qualité : champs clés manquants */
+proc sql;
+  create table wrk.qc_missing as
+  select * from wrk.input
+  where id is null or date_ref is null;
+quit;
+
+/* Journalisation (horodatée) */
+data _null_;
+  file "&LOG./batch_run.log" mod;
+  put "&sysdatetime. | QC_MISSING | " _N_=;
+run;</code></pre>
+
+    <h3>QlikView — chargement et comparaison J vs J-1</h3>
+    <pre><code>// Paramètres (fictifs)
+SET vDataPath = '..\data\';
+
+// Chargements
+DM_Production:
+LOAD * FROM [$(vDataPath)DM_Production.qvd] (qvd);
+
+LEFT JOIN (DM_Production)
+LOAD key, qty as qty_J1
+FROM [$(vDataPath)DM_Production_J1.qvd] (qvd);
+
+// Statut simple (dans une expression KPI)
+// If(qty - qty_J1 = 0, 'OK', If(Abs(qty - qty_J1) &lt;= 10, 'Avert.', 'KO'))</code></pre>
+
+
+
+    <p class="meta">Les noms de tables, chemins et règles sont génériques pour respecter la confidentialité.</p>
+  </section>
+
+  <!-- Résultats -->
+  <section>
+    <h2>Résultats</h2>
+    <h3>Fonctionnalités des onglets</h3>
+    <ul>
+      <li><strong>Accueil</strong> : date de dernière mise à jour.</li>
+      <li><strong>MAJ Tables</strong> : supervision des tables informatiques, datamart et mensuelles.</li>
+      <li><strong>MAJ Batch</strong> : suivi des batchs quotidiens, hebdomadaires, mensuels.</li>
+      <li><strong>Écarts</strong> : vue synthétique J vs J-1 pour localiser précisément les écarts.</li>
+      <li><strong>Alerteur</strong> : mise en valeur des données manquantes ou hors norme.</li>
+    </ul>
+  </section>
+
+  <!-- Impact -->
+  <section class="h-row">
+    <div>
+      <h2>Impact global</h2>
+      <ul>
+        <li>Diminution des interventions manuelles grâce à l’automatisation.</li>
+        <li>Traçabilité renforcée via historisation et rejouabilité documentée.</li>
+        <li>Standardisation et fiabilisation des reportings.</li>
+      </ul>
+    </div>
+    <aside>
+      <h2>Avant / Après</h2>
+      <div class="ba">
+        <div class="box">Avant : contrôles dispersés, peu traçables, rejouages manuels.</div>
+        <div class="box">Après : contrôles centralisés, logs détaillés, rejouabilité automatisée, alertes paramétrées.</div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Démonstration (mockup anonymisé) -->
+  <section id="mockup-qlik" aria-label="Démonstration anonymisée">
+    <div class="wrap">
+      <div class="title">
+        <div>
+          <h3>Démonstration (mockup anonymisé)</h3>
+          <div class="subtitle">Structure inspirée d’un dashboard QlikView — données et noms génériques</div>
+        </div>
+        <span class="pill">Dernier rechargement : 17/05/2022 13:30:31</span>
+      </div>
+
+      <nav class="tabs" role="tablist" aria-label="Onglets">
+        <button class="tab" role="tab" aria-selected="true" data-tab="accueil">Accueil</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="maj-tables">MAJ Tables</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="maj-batch">MAJ Batch</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="ecarts">Écarts</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="alerteur">Alerteur</button>
+      </nav>
+
+      <!-- ACCUEIL -->
+      <section id="panel-accueil" class="panel active" role="tabpanel">
+        <div class="grid">
+          <div class="card">
+            <h4>Indicateurs clés</h4>
+            <div class="body">
+              <div class="kpis">
+                <div class="kpi"><div class="label">Tables datamart à jour</div><div class="val">24 / 24</div></div>
+                <div class="kpi"><div class="label">Batchs quotidiens OK</div><div class="val">31 / 31</div></div>
+                <div class="kpi"><div class="label">Écarts détectés</div><div class="val">0</div></div>
+              </div>
+              <div class="legend">
+                <div class="item"><span class="status ok"></span>OK</div>
+                <div class="item"><span class="status warn"></span>Avert.</div>
+                <div class="item"><span class="status ko"></span>KO</div>
+              </div>
+              <p class="hint">Objectif : supervision simple à J-1, sans exposer d’éléments internes.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Résumé du processus</h4>
+            <div class="body">
+              <ol>
+                <li>Développement local des évolutions.</li>
+                <li>Mise en recette sur serveur de test.</li>
+                <li>Recette et validation (PV de recette).</li>
+                <li>Mise en production planifiée.</li>
+              </ol>
+              <p class="hint">Cadre issu du rapport : déploiement mensuel (deuxième mardi).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MAJ TABLES -->
+      <section id="panel-maj-tables" class="panel" role="tabpanel">
+        <div class="card">
+          <h4>Mise à jour des tables (exemple)</h4>
+          <div class="body">
+            <table>
+              <thead>
+                <tr><th>Source</th><th>Table</th><th>Dernière MàJ</th><th>Statut</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>SI</td><td>TABLES_QUOT</td><td>17/05/2022 06:10</td><td><span class="status ok"></span></td></tr>
+                <tr><td>SI</td><td>TABLES_MENS</td><td>01/05/2022 04:05</td><td><span class="status ok"></span></td></tr>
+                <tr><td>Datamart</td><td>T_PRODUCTION</td><td>17/05/2022 06:30</td><td><span class="status ok"></span></td></tr>
+                <tr><td>Datamart</td><td>T_OUVERTURE</td><td>17/05/2022 06:32</td><td><span class="status ok"></span></td></tr>
+              </tbody>
+            </table>
+            <p class="hint">Noms génériques : aucun identifiant, chemin ou structure interne réelle.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- MAJ BATCH -->
+      <section id="panel-maj-batch" class="panel" role="tabpanel">
+        <div class="card">
+          <h4>Batchs — exécution du jour (exemple)</h4>
+          <div class="body">
+            <table>
+              <thead>
+                <tr><th>Programme</th><th>Début</th><th>Fin</th><th>Code retour</th><th>Fréquence</th><th>Statut</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>PROGRAM_01</td><td>04:12</td><td>04:19</td><td>0</td><td>Quotidien</td><td><span class="status ok"></span></td></tr>
+                <tr><td>PROGRAM_02</td><td>04:21</td><td>04:26</td><td>0</td><td>Quotidien</td><td><span class="status ok"></span></td></tr>
+                <tr><td>PROGRAM_15</td><td>05:04</td><td>05:32</td><td>0</td><td>Hebdo</td><td><span class="status ok"></span></td></tr>
+                <tr><td>PROGRAM_27</td><td>06:01</td><td>—</td><td>—</td><td>Mensuel</td><td><span class="status warn"></span></td></tr>
+              </tbody>
+            </table>
+            <p class="hint">Exemple anonymisé : pas de noms, répertoires ou codes internes.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ECARTS -->
+      <section id="panel-ecarts" class="panel" role="tabpanel">
+        <div class="grid">
+          <div class="card">
+            <h4>Écarts détectés (exemple)</h4>
+            <div class="body">
+              <p class="hint">Une vue synthétique pour localiser plus précisément l’écart. En confrontant le fichier SAS « Production Contrôle » du jour J avec le J-1.</p>
+              <table>
+                <thead><tr><th>Périmètre</th><th>Indicateur</th><th>J</th><th>J-1</th><th>Delta</th><th>Statut</th></tr></thead>
+                <tbody>
+                  <tr><td>FDP</td><td>Production</td><td>12 450</td><td>12 448</td><td>+2</td><td><span class="status ok"></span></td></tr>
+                  <tr><td>PSP</td><td>Ouvertures</td><td>3 100</td><td>3 540</td><td>-440</td><td><span class="status warn"></span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <h4>Commentaires</h4>
+            <div class="body">
+              <ul>
+                <li>Alertes en cas d’écart significatif ou d’absence de données attendues.</li>
+                <li>Rejouages encadrés et tracés via journaux d’exécution.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ALERTEUR -->
+      <section id="panel-alerteur" class="panel" role="tabpanel">
+        <div class="card">
+          <h4>Alerteur (exemple)</h4>
+          <div class="body">
+            <p class="hint">Une vue sur les alerteurs qui mettent en valeur quand les données sont manquantes, ou qu’elles sortent de la normalité.</p>
+            <table>
+              <thead><tr><th>Type</th><th>Code</th><th>Libellé</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td>Produit</td><td>PRD_XX</td><td>(non renseigné)</td><td>À paramétrer</td></tr>
+                <tr><td>Canal</td><td>CNL_07</td><td>(non renseigné)</td><td>À paramétrer</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- Livrables -->
+  <section>
+    <h2>Livrables</h2>
+    <ul>
+      <li>Application QlikView pour le suivi et le contrôle des flux.</li>
+      <li>Scripts SAS batch accompagnés de leur documentation technique.</li>
+      <li>Procédures de diffusion et d’archivage des résultats.</li>
+    </ul>
+  </section>
+
+ 
+ 
+
+  <a href="../index.html" class="btn back">← Retour au portfolio</a>
+</main>
+
+<!-- Script du mockup -->
+<script>
+  (function(){
+    const root = document.getElementById('mockup-qlik');
+    if(!root) return;
+    const tabs = root.querySelectorAll('.tab');
+    const panels = {
+      'accueil': root.querySelector('#panel-accueil'),
+      'maj-tables': root.querySelector('#panel-maj-tables'),
+      'maj-batch': root.querySelector('#panel-maj-batch'),
+      'ecarts': root.querySelector('#panel-ecarts'),
+      'alerteur': root.querySelector('#panel-alerteur'),
+    };
+    tabs.forEach(t=>{
+      t.addEventListener('click', ()=>{
+        tabs.forEach(x=>x.setAttribute('aria-selected','false'));
+        t.setAttribute('aria-selected','true');
+        Object.values(panels).forEach(p=>p.classList.remove('active'));
+        const id = t.dataset.tab;
+        if(panels[id]) panels[id].classList.add('active');
+      });
+    });
+  })();
+</script>
+</body>
+</html>
