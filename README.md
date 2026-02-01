@@ -1,9 +1,9 @@
 <!-- ✅ Place ta photo ici : img/profile.jpg  -->
-<!-- Exemple : assets/img/profile.jpg -->
+<!-- Exemple : img/profile.jpg -->
 
 <div align="center">
 
-<img src="assets/img/profile.jpg" alt="Photo de Meryem Lachgar" width="160" style="border-radius: 50%;" />
+<img src="img/profile.jpg" alt="Photo de Meryem Lachgar" width="160" style="border-radius: 50%;" />
 
 # MERYEM LACHGAR — Portfolio Data  
 **Data & Analytics Engineer (MIAGE) | BI • Gouvernance • Automatisation • Data Engineering**
