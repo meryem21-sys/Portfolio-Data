@@ -4,7 +4,7 @@ title: Portfolio
 ---
 
 <div class="hero">
-  <img class="avatar" src="assets/img/profile.jpg" alt="Photo de Meryem Lachgar" />
+  <img class="avatar" src="assets/img/profile.png" alt="Photo de Meryem Lachgar" />
   <div class="hero-content">
     <h1>Meryem Lachgar</h1>
     <p class="subtitle">Data & Analytics Engineer (MIAGE) • BI • Gouvernance • Automatisation • Data Engineering</p>
