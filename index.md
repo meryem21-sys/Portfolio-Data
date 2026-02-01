@@ -106,4 +106,4 @@ Je peux partager en entretien : méthodologie, architecture, choix techniques, e
 <div id="contact"></div>
 
 📩 **meryemlachgar2001@gmail.com**  
-🔗 LinkedIn : *(à renseigner)*
+🔗 LinkedIn : *www.linkedin.com/in/meryem-lachgar*
