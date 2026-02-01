@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Mon procédé — Meryem LACHGAR</title>
+  <meta name="description" content="Processus Data Analyst de bout en bout : cadrage, data cleaning, pipelines, dashboards, communication, avec livrables et contrôles qualité."/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* petits plus UX (optionnels) */
+    details{background:#fff;border-radius:14px;box-shadow:0 8px 26px rgba(0,0,0,.06);padding:12px 14px}
+    details+details{margin-top:12px}
+    summary{cursor:pointer;font-weight:700;outline:none}
+    .pill{display:inline-block;background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;border-radius:20px;padding:4px 10px;font-size:12px;margin-right:6px}
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">Meryem <span class="highlight">Lachgar</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#projects">Projets</a></li>
+        <li><a href="process.html">Mon procédé</a></li>
+        <li><a href="about.html">À propos</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a class="btn small" href="cv.pdf" target="_blank" rel="noopener">Télécharger le CV</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="breadcrumbs"><a href="index.html">← Accueil</a></div>
+      <h1 class="hero-title">Mon procédé</h1>
+      <p class="hero-sub">De l’expression de besoin à la restitution — avec gouvernance & automatisation.</p>
+    </div>
+  </header>
+
+  <main class="container page">
+    <!-- Aperçu en cartes -->
+    <section class="section" style="padding-top:24px">
+      <div class="steps">
+        <a class="step" href="#analyse">
+          <div class="step-ico">🧭</div><h3>1. Analyse des besoins</h3>
+          <p>Ateliers, objectifs, périmètre, KPIs cibles.</p>
+        </a>
+        <a class="step" href="#cleaning">
+          <div class="step-ico">🧹</div><h3>2. Data cleaning</h3>
+          <p>Qualité, normalisation, dictionnaire.</p>
+        </a>
+        <a class="step" href="#pipelines">
+          <div class="step-ico">🔗</div><h3>3. Pipelines</h3>
+          <p>ETL/ELT, historisation, rejouabilité.</p>
+        </a>
+        <a class="step" href="#dashboards">
+          <div class="step-ico">📊</div><h3>4. Dashboards</h3>
+          <p>Design utile, performance, filtres.</p>
+        </a>
+        <a class="step" href="#communication">
+          <div class="step-ico">📣</div><h3>5. Communication</h3>
+          <p>Adoption, docs, transfert.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Détails par étape (cliquables) -->
+    <section class="section" id="analyse">
+      <h2>1) Analyse des besoins</h2>
+      <details open>
+        <summary>Objectifs</summary>
+        <ul>
+          <li>Cadrer les <strong>KPI</strong> alignés avec les objectifs métier.</li>
+          <li>Identifier sources, contraintes, fréquences, règles de gestion.</li>
+          <li>Définir la <strong>valeur attendue</strong> (cas d’usage, décisions à prendre).</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Livrables</summary>
+        <p><span class="pill">Dossier de cadrage</span><span class="pill">Glossaire KPI</span><span class="pill">Maquettes TDB</span></p>
+      </details>
+      <details>
+        <summary>Bonnes pratiques</summary>
+        <ul>
+          <li>Ateliers courts & fréquents, validation écrite des définitions.</li>
+          <li>Traçabilité des règles dans un dictionnaire simple (table/MD).</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="section" id="cleaning">
+      <h2>2) Data cleaning & qualité</h2>
+      <details open>
+        <summary>Règles DQM</summary>
+        <ul>
+          <li><strong>Exactitude</strong>, <strong>complétude</strong>, <strong>cohérence</strong>, <strong>ponctualité</strong>.</li>
+          <li>Contrôles d’écarts et tableaux de suivi qualité.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Livrables</summary>
+        <p><span class="pill">Règles de nettoyage</span><span class="pill">Dictionnaire de données</span><span class="pill">Journal d’écarts</span></p>
+      </details>
+      <details>
+        <summary>Outils</summary>
+        <p>Power Query, SQL, Python (pandas), validations croisées.</p>
+      </details>
+    </section>
+
+    <section class="section" id="pipelines">
+      <h2>3) Pipelines & modèles</h2>
+      <details open>
+        <summary>Architecture</summary>
+        <ul>
+          <li>ETL/ELT (Talend, SQL, Python), historisation minimale (SCD light si besoin).</li>
+          <li>Modélisation en <strong>faits/dimensions</strong> centrée usages.</li>
+          <li>Rejouabilité, logs, planification, surveillance simple.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Livrables</summary>
+        <p><span class="pill">Schéma décisionnel</span><span class="pill">Scripts ETL</span><span class="pill">Plan d’exécution</span></p>
+      </details>
+      <details>
+        <summary>Risques & parades</summary>
+        <ul>
+          <li>Dépendances externes → files d’attente, timeouts, alerting.</li>
+          <li>Changements de schéma → contrats de données, tests de régression.</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="section" id="dashboards">
+      <h2>4) Dashboards & KPIs</h2>
+      <details open>
+        <summary>Design & UX</summary>
+        <ul>
+          <li>Pages thématiques, lisibilité, filtres pertinents, drill-through.</li>
+          <li>Performance : agrégations, colonnes calculées minimales, mesures DAX bien pensées.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Livrables</summary>
+        <p><span class="pill">Power BI/Qlik</span><span class="pill">Guides utilisateurs</span><span class="pill">Exports PDF/Excel</span></p>
+      </details>
+      <details>
+        <summary>Mesure d’impact</summary>
+        <ul>
+          <li>Réduction du temps manuel, fraîcheur J0/J+1, adoption par les rituels.</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="section" id="communication">
+      <h2>5) Communication & transfert</h2>
+      <details open>
+        <summary>Adoption</summary>
+        <ul>
+          <li>Restitutions courtes, storytelling, mise en avant des KPI d’action.</li>
+          <li>Formations express (30-45 min) et supports visuels.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Livrables</summary>
+        <p><span class="pill">Documentation</span><span class="pill">Playbooks</span><span class="pill">Check-lists d’exploitation</span></p>
+      </details>
+      <details>
+        <summary>Run & amélioration continue</summary>
+        <ul>
+          <li>Points réguliers, backlog d’amélioration, suivi des incidents.</li>
+        </ul>
+      </details>
+    </section>
+
+    <a href="index.html" class="btn back">← Retour au portfolio</a>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 — Dernière mise à jour : septembre 2025</p>
+    </div>
+  </footer>
+</body>
+</html>
