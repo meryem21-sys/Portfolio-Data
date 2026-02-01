@@ -1,83 +1,146 @@
-# Meryem Lachgar — Data & Analytics Engineer (MIAGE)
+# MERYEM LACHGAR — Data & Analytics Engineer | BI • Gouvernance • Automatisation • Data Engineering
 
-Je conçois des solutions data **fiables, industrialisées et orientées métier** : BI & dashboards, pipelines ETL/ELT, data quality, modélisation et automatisation pour transformer les données en **KPI actionnables**.
+📍 Paris • ✉️ meryemlachgar2001@gmail.com • 📞 +33 7 64 02 76 64  
+LinkedIn : *(colle ton lien ici)* • GitHub : *(colle ton lien ici)*
 
-📍 Paris • 🎓 Master MIAGE (Informatique décisionnelle)
-
----
-
-## 🧰 Stack & compétences
-
-- **BI / DataViz** : Power BI, QlikView (modèle sémantique, KPI, storytelling)
-- **Data Engineering** : ETL (Talend), staging/datamart, traçabilité & contrôles qualité
-- **Data / Code** : SQL, Python, R, automatisation & reporting
-- **Qualité & gouvernance** : contrôles, alerting, standardisation, documentation
-
-> Expériences/projets autour du **pilotage logistique**, de la **fiabilisation du reporting** et de l’**automatisation**. :contentReference[oaicite:0]{index=0} :contentReference[oaicite:1]{index=1}
+Je suis **analyste & ingénieure data**, passionnée par la valorisation de la donnée. Je conçois des solutions analytiques **fiables** pour améliorer la performance opérationnelle et accompagner les métiers dans leurs décisions.  
+Spécialisée en **reporting avancé, automatisation et data engineering**, j’interviens sur toute la chaîne (KPI → qualité → pipelines → restitution) pour transformer les données en **leviers stratégiques**.
 
 ---
 
-## ⭐ Projets sélectionnés
+## Ce que j’apporte
 
-> Remplace les liens ci-dessous par tes URLs GitHub / GitHub Pages (ou laisse en relatif si ton portfolio est dans le repo).
-
-### 1) Application de contrôle automatisé — QlikView & SAS (CACF)
-**Objectif :** fiabiliser les reportings via des contrôles centralisés, traçabilité et supervision (batch + datamart). :contentReference[oaicite:2]{index=2}  
-**Tech :** QlikView, SAS (batch), SQL, datamart, data quality. :contentReference[oaicite:3]{index=3}  
-🔗 Projet : `./cacf_qlikview.html` (ou URL GitHub Pages)
+✅ **Fiabilisation & Data Quality** : règles de gestion, contrôles, rapprochements, traçabilité, standardisation, documentation  
+✅ **Industrialisation** : pipelines ETL/ELT, staging/datamarts, optimisation des traitements, logs & reprise sur incident  
+✅ **Automatisation** : réduction du manuel, production de reporting robuste, process reproductibles  
+✅ **BI orientée décision** : KPI, modèles sémantiques, dashboards lisibles, drill-down, storytelling
 
 ---
 
-### 2) Solution BI de pilotage logistique — Talend ➜ Datamart ➜ Power BI
-Chaîne BI industrialisée (ingestion, staging/qualité, datamart en étoile, modèle sémantique, rapports) pour un reporting logistique mensuel fiable. :contentReference[oaicite:4]{index=4}  
-**Tech :** Talend Open Studio, Oracle SQL Developer, Power BI, Power Query. :contentReference[oaicite:5]{index=5}  
-🔗 Projet : `./ratp_stocks.html` (ou URL GitHub Pages)
+## Compétences
+
+**BI / Reporting / Automatisation**  
+- Power BI (certifiée) • QlikView • Qlik Sense • Tableau • Excel avancé  
+- Power Query • DAX • VBA • Power Automate • VBS
+
+**Data Engineering / Cloud**  
+- Talend • Apache NiFi • Kafka • Spark / PySpark • Hadoop  
+- GCP (BigQuery) • Azure (DataLake/Databricks) • Docker • GitLab CI/CD
+
+**Langages & Bases de données**  
+- SQL • PL/SQL • Python • R • SAS • Java  
+- Oracle • PostgreSQL • SQL Server • BigQuery
+
+**Gouvernance**  
+- Modélisation de données • KPI & définitions • documentation • contrôle qualité • Collibra
+
+---
+
+## Expériences (résumé)
+
+### Data Analyst (Alternance) — RATP Group | CSP Logistique (09/2023 → 10/2025)
+- Construction de tableaux de bord **Power BI** (stocks, couverture, fournisseurs, performance)
+- Mise en place d’un reporting complet (ponctualité, délais, conformité)
+- Fiabilisation des données via **Power Query** et requêtes **SQL**
+- Automatisation de process (VBA/Outlook), génération automatique de rapports mensuels
+- Standardisation des KPI (définitions, règles de calcul, contrôles) + documentation
+
+### Data Developer (Alternance) — Crédit Agricole Consumer Finance (04/2021 → 09/2022)
+- Application **QlikView** de supervision des flux (suivi batch/datamart, alertes, écarts)
+- Extraction & contrôles SQL, rapprochements pour fiabiliser les indicateurs de pilotage
+- Automatisation du reporting et des contrôles (SAS EG / Excel VBA / scripts)
+- Documentation, support utilisateurs, améliorations continues
+
+---
+
+## Projets (démos consultables)
+
+> 👇 Les liens ci-dessous sont prévus pour un portfolio GitHub Pages.  
+> Place chaque projet dans `projects/<nom-projet>/index.html` (voir section “Structure du repo”).
+
+### 1) CACF — Contrôles automatisés & supervision (QlikView + SAS)
+**Objectif :** fiabiliser les reportings en industrialisant les contrôles et la traçabilité.  
+**Ce que j’ai fait :** contrôles de cohérence, suivi batch/datamart, gestion d’écarts, alertes, recette/MEP.  
+**Stack :** QlikView • SAS (batch) • SQL • Datamart • Data Quality  
+🔗 Démo : `projects/cacf-qlikview/`
+
+---
+
+### 2) RATP — Chaîne BI industrialisée (Talend ➜ Datamart ➜ Power BI)
+**Objectif :** reporting logistique mensuel fiable et rapide à rafraîchir.  
+**Ce que j’ai fait :** ingestion/staging, contrôles qualité, modèle étoile, KPI centralisés, restitution Power BI.  
+**Stack :** Talend • Oracle SQL Developer • Power BI • Power Query  
+🔗 Démo : `projects/ratp-stocks/`  
+📎 Livrable (option) : `assets/ETL_avec_Talend_Open_Studio.pptx`
 
 ---
 
 ### 3) Détection de fraude carte bancaire — Machine Learning
-Projet ML sur **données très déséquilibrées** : pipelines scikit-learn, (under/over) sampling + **SMOTE**, GridSearchCV, calibration de seuil, métriques PR-AUC/F1/Recall. :contentReference[oaicite:6]{index=6}  
-**Tech :** Python, pandas, scikit-learn, imblearn, matplotlib. :contentReference[oaicite:7]{index=7}  
-🔗 Projet : `./fraud.html` (ou URL GitHub Pages)
+**Objectif :** détecter la fraude sur un dataset très déséquilibré.  
+**Ce que j’ai fait :** pipelines, sampling + SMOTE, GridSearchCV, calibration du seuil, métriques PR-AUC/F1/Recall.  
+**Stack :** Python • pandas • scikit-learn • imblearn  
+🔗 Démo : `projects/fraud-ml/`
 
 ---
 
 ### 4) Analyse COVID-19 — Pipeline R reproductible
-Pipeline de bout en bout : ingestion (source publique), wrangling, visualisations, export en **R Markdown** (HTML/PDF). :contentReference[oaicite:8]{index=8}  
-**Tech :** R, ggplot2, R Markdown. :contentReference[oaicite:9]{index=9}  
-🔗 Projet : `./covid.html` (ou URL GitHub Pages)
+**Objectif :** pipeline complet + rapport automatisable.  
+**Ce que j’ai fait :** ingestion source publique, wrangling, visualisations, restitution R Markdown.  
+**Stack :** R • ggplot2 • R Markdown  
+🔗 Démo : `projects/covid-r/`
 
 ---
 
-### 5) Dépenses de santé & dépassements d’honoraires — Python OOP + SQLite + XML/XSL
-Application Python orientée objet : ingestion mensuelle, indicateurs, rapports, stockage SQLite, sorties XML/DTD + XSL. :contentReference[oaicite:10]{index=10}  
-**Tech :** Python, pandas, matplotlib, SQLite, XML/XSL. :contentReference[oaicite:11]{index=11}  
-🔗 Projet : `./soins.html` (ou URL GitHub Pages)
+### 5) Dépenses de santé — Python OOP + SQLite + XML/XSL
+**Objectif :** automatiser un traitement mensuel + indicateurs + restitution.  
+**Ce que j’ai fait :** modèle objet, calcul d’indicateurs, visualisations, stockage SQLite, export XML/DTD + XSL.  
+**Stack :** Python • SQLite • XML/XSL • matplotlib  
+🔗 Démo : `projects/soins-sante/`
 
 ---
 
 ### 6) Mobilité internationale — Référentiel & procédures (Access)
-Outil de pilotage : modélisation entités/relations, base Access, formulaires/requêtes, procédures standardisées. :contentReference[oaicite:12]{index=12}  
-**Tech :** Modélisation, Access, documentation process. :contentReference[oaicite:13]{index=13}  
-🔗 Projet : `./mobilite.html` (ou URL GitHub Pages)
+**Objectif :** centraliser les dossiers + standardiser les procédures.  
+**Ce que j’ai fait :** modélisation entités/relations, base Access, formulaires, requêtes, exports, documentation.  
+**Stack :** Modélisation • Access • Documentation process  
+🔗 Démo : `projects/mobilite/`
 
 ---
 
-## 📌 Démos / livrables (si tu veux les exposer dans le repo)
+## Documents
 
-- Power BI : `./TDB_Réassurance.pbix`
-- Slides ETL : `./ETL avec Talend Open Studio.pptx`
-- Notebook : `./Projet_IAS_Groupe_7-a.ipynb`
-
----
-
-## 📬 Me contacter
-
-- LinkedIn : *(à renseigner)*
-- Email : *(à renseigner)*
-- Portfolio : *(à renseigner)*
+- 📄 CV : `assets/CV_ML_2025.pdf`
+- 🧩 Rapport L3 MIAGE : `assets/Rapport_L3MIAGE_MeryemLachgar_VF.pdf`
+- 🧠 Rapport M1 MIAGE : `assets/RAPPORT_M1MIAGE_MERYEM_LACHGAR.pdf`
+- 📌 Rapport d’activités : `assets/Rapport_d’activités_Meryem_LACHGAR.pdf`
 
 ---
 
-### 💡 À propos de ce repo
-Ce dépôt regroupe des projets data (BI, ETL, analytics, ML) avec une logique commune : **qualité, reproductibilité, impact métier**.
+## Structure recommandée du repo (pour GitHub Pages)
+
+Crée un repo `portfolio` (ou `meryemlachgar.github.io`) et organise comme suit :
+
+```txt
+portfolio/
+  README.md
+  _config.yml
+  assets/
+    CV_ML_2025.pdf
+    Rapport_L3MIAGE_MeryemLachgar_VF.pdf
+    RAPPORT_M1MIAGE_MERYEM_LACHGAR.pdf
+    Rapport_d’activités_Meryem_LACHGAR.pdf
+    ETL_avec_Talend_Open_Studio.pptx
+    img/
+  projects/
+    cacf-qlikview/
+      index.html   (ex: cacf_qlikview.html renommé en index.html)
+    ratp-stocks/
+      index.html   (ex: ratp_stocks.html → index.html)
+    fraud-ml/
+      index.html   (ex: fraud.html → index.html)
+    covid-r/
+      index.html   (ex: covid.html → index.html)
+    soins-sante/
+      index.html   (ex: soins.html → index.html)
+    mobilite/
+      index.html   (ex: mobilite.html → index.html)
