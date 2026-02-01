@@ -1,4 +1,4 @@
-<!-- ✅ Place ta photo ici : assets/img/profile.jpg  -->
+<!-- ✅ Place ta photo ici : img/profile.jpg  -->
 <!-- Exemple : assets/img/profile.jpg -->
 
 <div align="center">
