@@ -3,7 +3,7 @@
 
 <div align="center">
 
-<img src="img/profile.jpg" alt="Photo de Meryem Lachgar" width="160" style="border-radius: 50%;" />
+<img src="img/profile.png" alt="Photo de Meryem Lachgar" width="160" style="border-radius: 50%;" />
 
 # MERYEM LACHGAR — Portfolio Data  
 **Data & Analytics Engineer (MIAGE) | BI • Gouvernance • Automatisation • Data Engineering**
