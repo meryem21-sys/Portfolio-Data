@@ -1,59 +1,87 @@
-# Meryem Lachgar  
-Data & Analytics Engineer — BI, Gouvernance des données, Data Engineering
+---
+layout: default
+title: Portfolio
+---
 
-Paris, France  
-Email : meryemlachgar2001@gmail.com  
-LinkedIn : https://www.linkedin.com/in/meryem-lachgar/  
-GitHub : https://github.com/meryem21-sys
+<div class="hero">
+
+  <img class="avatar" src="assets/img/profile.jpg" alt="Meryem Lachgar">
+
+  <div class="hero-content">
+    <h1>Meryem Lachgar</h1>
+
+    <p class="subtitle">
+      Data & Analytics Engineer — BI, Gouvernance des données, Data Engineering
+    </p>
+
+    <p>
+      Ingénieure data diplômée d’un Master MIAGE, spécialisée dans la conception,
+      la fiabilisation et l’industrialisation de solutions data orientées
+      pilotage de la performance et aide à la décision.
+    </p>
+
+    <div class="chips">
+      <span>Power BI</span>
+      <span>Qlik</span>
+      <span>Talend</span>
+      <span>SQL</span>
+      <span>Python</span>
+      <span>Data Quality</span>
+    </div>
+
+    <div class="cta">
+      <a href="projects/" class="btn primary">Voir les projets</a>
+      <a href="assets/CV_ML_2025.pdf" class="btn">Télécharger le CV</a>
+      <a href="#contact" class="btn ghost">Contact</a>
+    </div>
+
+    <div class="meta">
+      <span>Paris, France</span>
+      <span>meryemlachgar2001@gmail.com</span>
+    </div>
+  </div>
+
+</div>
 
 ---
 
 ## Présentation
 
-Ingénieure data diplômée d’un Master MIAGE (Informatique Décisionnelle), je conçois, fiabilise et industrialise des solutions data orientées **pilotage de la performance** et **aide à la décision**.
+Je conçois des solutions data fiables et maintenables, avec une attention particulière portée à la
+**qualité des données**, à la **cohérence des indicateurs** et à l’**usage métier**.
 
-Mon parcours en alternance m’a permis d’intervenir sur des environnements **réels et complexes**, avec des données métiers critiques (logistique, finance, activité commerciale), en lien étroit avec les équipes opérationnelles et décisionnaires.
+Mon expérience en alternance au sein de grands groupes m’a permis de travailler sur des
+environnements réels, multi-sources et soumis à des enjeux forts de fiabilité, de traçabilité
+et de prise de décision.
 
-Ce portfolio a pour objectif de présenter :
-- ma **démarche de travail**
-- mes **réalisations concrètes**
-- mes **choix techniques**
-au-delà d’un CV synthétique.
-
----
-
-## Ce que je fais concrètement
-
-- Traduction des besoins métiers en **indicateurs fiables et exploitables**
-- Structuration et standardisation des **KPI de pilotage**
-- Mise en place de **chaînes data industrialisées** (ETL → datamart → BI)
-- Fiabilisation des données (contrôles, rapprochements, alertes, traçabilité)
-- Automatisation des reportings et des traitements récurrents
-- Restitution claire et orientée décision (dashboards, analyses, recommandations)
+Ce portfolio vise à présenter ma **démarche professionnelle**, mes **réalisations concrètes**
+et mes **choix techniques**, en complément de mon CV.
 
 ---
 
-## Expériences professionnelles (détaillées)
+## Approche professionnelle
+
+- Analyse et compréhension des besoins métiers
+- Définition et standardisation des KPI
+- Mise en place de chaînes data industrialisées
+- Contrôles qualité, rapprochements et alertes
+- Automatisation des traitements et reportings
+- Restitution claire et orientée décision
+
+---
+
+## Expériences professionnelles
 
 ### Data Analyst — RATP Group  
 CSP Logistique — Direction Stratégie, Finance & Performance Durable  
 Alternance | 09/2022 – 09/2025
 
-**Contexte**  
-Pilotage de la performance logistique (stocks, couverture, délais, fournisseurs) dans un environnement multi-sources, avec des enjeux forts de fiabilité des chiffres et de prise de décision.
-
-**Contributions principales**
-- Conception et évolution de tableaux de bord Power BI utilisés pour le pilotage mensuel
-- Définition, formalisation et documentation des KPI budgétaires et opérationnels
-- Fiabilisation des données via Power Query et requêtes SQL (contrôles, cohérence inter-sources)
-- Industrialisation de l’alimentation des datasets via Talend ETL et scripts automatisés
-- Automatisation de reportings et processus (VBA, Outlook, Excel)
-- Participation aux comités de pilotage : présentation d’analyses, interprétation des résultats, recommandations
-
-**Résultats**
-- Réduction des traitements manuels
-- Amélioration de la fiabilité et de la lisibilité des indicateurs
-- Harmonisation des pratiques de reporting au sein du CSP
+- Conception et maintenance de tableaux de bord Power BI dédiés au pilotage logistique
+- Définition, formalisation et documentation des indicateurs de performance
+- Fiabilisation des données via Power Query et requêtes SQL
+- Industrialisation de l’alimentation des datasets (ETL, scripts automatisés)
+- Automatisation de processus récurrents et génération de reportings
+- Présentation d’analyses et recommandations aux équipes métiers
 
 ---
 
@@ -61,86 +89,118 @@ Pilotage de la performance logistique (stocks, couverture, délais, fournisseurs
 Suivi d’Activité Commerce  
 Alternance | 04/2021 – 09/2022
 
-**Contexte**  
-Supervision des flux SI et du datamart d’activité commerciale dans un environnement bancaire réglementé.
-
-**Contributions principales**
-- Développement et maintenance d’une application QlikView de supervision des flux
-- Suivi des traitements batch, détection d’écarts et génération d’alertes
-- Extraction et contrôles SQL pour fiabiliser les indicateurs
-- Automatisation des contrôles et du reporting (SAS EG, Excel VBA, scripts)
+- Développement d’une application QlikView de supervision des flux et du datamart
+- Suivi des traitements batch et détection d’anomalies
+- Contrôles et rapprochements SQL pour fiabiliser les indicateurs
+- Automatisation des contrôles et du reporting (SAS EG, VBA, scripts)
 - Documentation des traitements et support utilisateurs
-
-**Résultats**
-- Meilleure visibilité sur l’état des flux
-- Diminution des anomalies non détectées
-- Amélioration de la réactivité des équipes métier
 
 ---
 
 ## Compétences
 
-### BI & Reporting
+**BI & Reporting**  
 Power BI (certifiée), QlikView, Qlik Sense, Tableau, Excel avancé
 
-### Data Engineering & Cloud
+**Data Engineering**  
 Talend, Apache NiFi, Kafka, Spark / PySpark, Hadoop  
-Google Cloud Platform (BigQuery), Azure (DataLake, Databricks)  
-Docker, Git, CI/CD
+GCP (BigQuery), Azure (DataLake, Databricks)
 
-### Langages & Données
-SQL, PL/SQL, Python, R, SAS, Java, VBA  
-Oracle, PostgreSQL, SQL Server, BigQuery
+**Langages & Données**  
+SQL, PL/SQL, Python, R, SAS, Java  
+Oracle, PostgreSQL, SQL Server
 
-### Gouvernance & Qualité
-Modélisation de données, règles de gestion, contrôles qualité  
-Documentation, standardisation des KPI, traçabilité  
-Outils de gouvernance (ex. Collibra)
+**Gouvernance & Qualité**  
+Modélisation de données, règles de gestion, contrôles qualité, documentation
 
 ---
 
 ## Projets professionnels (extraits)
 
-Ces projets sont issus de contextes professionnels réels.  
-Les démonstrations présentées sont **anonymisées** et centrées sur la méthodologie.
+> Projets issus de contextes professionnels réels.  
+> Les démonstrations sont anonymisées et centrées sur la méthodologie.
 
-- Supervision et contrôle qualité des flux (QlikView / SAS)
-- Chaîne BI industrialisée pour le pilotage logistique (Talend → Datamart → Power BI)
+<div class="grid">
+
+<a class="card" href="projects/cacf-qlikview/">
+  <h3>Supervision & contrôle qualité des flux</h3>
+  <p>
+    Application de supervision des traitements batch et du datamart,
+    avec contrôles centralisés, alertes et traçabilité.
+  </p>
+  <div class="tags">
+    <span>QlikView</span><span>SAS</span><span>SQL</span><span>Data Quality</span>
+  </div>
+</a>
+
+<a class="card" href="projects/ratp-stocks/">
+  <h3>Chaîne BI industrialisée — Pilotage logistique</h3>
+  <p>
+    Ingestion, contrôles qualité, datamart en étoile et dashboards Power BI
+    pour le pilotage de la performance logistique.
+  </p>
+  <div class="tags">
+    <span>Talend</span><span>Oracle</span><span>Power BI</span>
+  </div>
+</a>
+
+</div>
 
 ---
 
 ## Projets académiques
 
-- Détection de fraude carte bancaire (Machine Learning, Python)
-- Analyse COVID-19 (pipeline R reproductible)
-- Application de suivi des dépenses de santé (Python OOP, SQLite, XML/XSL)
-- Outil de pilotage de mobilité internationale (modélisation & Access)
+<div class="grid">
 
-Chaque projet est documenté avec :
-- objectif
-- démarche
-- stack technique
-- résultats obtenus
+<a class="card" href="projects/fraud-ml/">
+  <h3>Détection de fraude carte bancaire</h3>
+  <p>Pipeline Machine Learning sur données déséquilibrées.</p>
+  <div class="tags">
+    <span>Python</span><span>scikit-learn</span>
+  </div>
+</a>
+
+<a class="card" href="projects/covid-r/">
+  <h3>Analyse COVID-19</h3>
+  <p>Pipeline R reproductible et reporting automatisé.</p>
+  <div class="tags">
+    <span>R</span><span>R Markdown</span>
+  </div>
+</a>
+
+<a class="card" href="projects/soins-sante/">
+  <h3>Dépenses de santé</h3>
+  <p>Application Python orientée objet avec stockage SQLite.</p>
+  <div class="tags">
+    <span>Python</span><span>SQLite</span>
+  </div>
+</a>
+
+<a class="card" href="projects/mobilite/">
+  <h3>Mobilité internationale</h3>
+  <p>Outil de pilotage et référentiel de données.</p>
+  <div class="tags">
+    <span>Modélisation</span><span>Access</span>
+  </div>
+</a>
+
+</div>
 
 ---
 
 ## Rapports & mémoire (confidentiel)
 
-Certains rapports académiques et mon mémoire de fin d’études reposent sur des **données réelles, KPI internes et processus métiers sensibles**, soumis à des engagements de confidentialité.
+Certains rapports académiques et le mémoire de fin d’études reposent sur des données,
+indicateurs et processus internes soumis à des engagements de confidentialité.
 
-Ce portfolio présente volontairement :
-- la démarche méthodologique
-- les architectures data
-- les choix techniques
-- les apports métier
-
-Les documents complets, ainsi que des éléments approfondis ou commentés, peuvent être **présentés et échangés lors d’un entretien**, dans le respect des règles de confidentialité.
+Le portfolio présente la démarche, les architectures et les choix techniques.
+Les versions détaillées et les éléments approfondis peuvent être présentés et échangés
+lors d’un entretien, dans le respect des règles de confidentialité.
 
 ---
 
 ## Contact
-
-Je suis disponible pour échanger sur mon parcours, mes projets ou un poste data orienté BI, gouvernance ou data engineering.
+<div id="contact"></div>
 
 Email : meryemlachgar2001@gmail.com  
 LinkedIn : https://www.linkedin.com/in/meryem-lachgar/
