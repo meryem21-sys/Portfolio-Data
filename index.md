@@ -20,18 +20,10 @@ title: Portfolio
       pilotage de la performance et aide à la décision.
     </p>
 
-    <div class="chips">
-      <span>Power BI</span>
-      <span>Qlik</span>
-      <span>Talend</span>
-      <span>SQL</span>
-      <span>Python</span>
-      <span>Data Quality</span>
-    </div>
 
     <div class="cta">
-      <a href="projects/" class="btn primary">Voir les projets</a>
-      <a href="assets/CV_ML_2025.pdf" class="btn">Télécharger le CV</a>
+      <a href="#projets" class="btn primary">Voir les projets</a>
+      <a href="assets/CV_MeryemLachgar_2026.pdf" class="btn">Télécharger le CV</a>
       <a href="#contact" class="btn ghost">Contact</a>
     </div>
 
@@ -149,7 +141,7 @@ Modélisation de données, règles de gestion, contrôles qualité, documentatio
 ---
 
 ## Projets académiques
-
+<div id="projets"></div>
 <div class="grid">
 
 <a class="card" href="projects/fraud-ml/">
