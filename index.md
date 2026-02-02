@@ -5,7 +5,7 @@ title: Portfolio
 
 <div class="hero">
 
-  <img class="avatar" src="assets/img/profile.jpg" alt="Meryem Lachgar">
+  <img class="avatar" src="assets/img/profile.png" alt="Meryem Lachgar">
 
   <div class="hero-content">
     <h1>Meryem Lachgar</h1>
@@ -106,7 +106,7 @@ Oracle, PostgreSQL, SQL Server
 Modélisation de données, règles de gestion, contrôles qualité, documentation
 
 ---
-
+<div id="projets"></div>
 ## Projets professionnels (extraits)
 
 > Projets issus de contextes professionnels réels.  
@@ -141,7 +141,7 @@ Modélisation de données, règles de gestion, contrôles qualité, documentatio
 ---
 
 ## Projets académiques
-<div id="projets"></div>
+
 <div class="grid">
 
 <a class="card" href="projects/fraud-ml/">
